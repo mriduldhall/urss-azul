@@ -1,7 +1,3 @@
-# urss-azul
-A Comparative Study Of Game-Playing AI From Traditional Games To Modern Games
-
-## Abstract
 Artificial intelligence has achieved impressive results in traditional board games such as Chess and Go, but much less attention has been given to modern board games that many people play today. These games often involve varied decisions and player interactions, making them useful environments for studying AI behaviour in recreational game-playing contexts, particularly how different agents interact with human players. This project explores how different AI agents perform in these settings, aiming to better understand their behaviour, strengths, and limitations.
 
 This project combines background research with practical experimentation. Existing literature on game-playing AI informs the design of three agents: a search-based approach using Minimax, a simulation-based approach using Monte Carlo Tree Search, and a learning-based approach using Reinforcement Learning. These are implemented in Python and tested in games of increasing complexity, from tic-tac-toe to the modern board game Azul. The agents are compared through simulated matches and play-testing.
@@ -9,4 +5,3 @@ This project combines background research with practical experimentation. Existi
 Although this project is in progress, initial experimentation suggests that the different AI approaches produce distinct play styles and decision-making behaviours. Search-based agents perform strongly in smaller games with clearly defined strategies, while simulation-based and learning-based agents appear more adaptable in complex games with larger decision spaces. These findings contribute to expanding game-playing AI research beyond traditional games and offer insight into how AI systems interact with human players.
 
 This research provides a foundation for applying AI techniques to a wider range of modern board games. Future work could explore hybrid approaches, human-interaction studies, and applications in game design and decision-making contexts.
-
