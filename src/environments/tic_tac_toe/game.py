@@ -17,8 +17,14 @@ class Game:
         return [position for position, marker in enumerate(self.board) if marker is Marker.EMPTY]
 
     def make_move(self, position):
+        try:
+            position = int(position)
+        except (ValueError, TypeError):
+            raise ValueError("Invalid move. Position must be an integer.")
+
         if position not in self.get_legal_actions():
-            return None
+            raise ValueError("Invalid move. Position is either occupied or out of bounds.")
+
         self.board[position] = self.current_player
         self.current_player = self.player_two_marker if self.current_player is self.player_one_marker else self.player_one_marker
         return True
