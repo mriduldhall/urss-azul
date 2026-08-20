@@ -13,6 +13,9 @@ class Game:
         self.current_player = self.player_one_marker
         self.board = (Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY)
 
+    def get_legal_actions(self):
+        return [i for i, marker in enumerate(self.board) if marker == Marker.EMPTY]
+
     def display_board(self):
         return f"{self.board[0].value} | {self.board[1].value} | {self.board[2].value}\n" \
                f"---------\n" \
