@@ -11,10 +11,10 @@ class Game:
         self.player_one_marker = Marker.X
         self.player_two_marker = Marker.O
         self.current_player = self.player_one_marker
-        self.board = (Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY, Marker.EMPTY)
+        self.board = [Marker.EMPTY] * 9
 
     def get_legal_actions(self):
-        return [i for i, marker in enumerate(self.board) if marker == Marker.EMPTY]
+        return [position for position, marker in enumerate(self.board) if marker is Marker.EMPTY]
 
     def display_board(self):
         return f"{self.board[0].value} | {self.board[1].value} | {self.board[2].value}\n" \
