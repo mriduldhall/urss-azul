@@ -47,6 +47,14 @@ class Game:
             return True
         return False
 
+    def clone(self):
+        cloned_game = Game()
+        cloned_game.board = self.board.copy()
+        cloned_game.player_one_marker = self.player_one_marker
+        cloned_game.player_two_marker = self.player_two_marker
+        cloned_game.current_player = self.current_player
+        return cloned_game
+
     def display_board(self):
         return f"{self.board[0].value} | {self.board[1].value} | {self.board[2].value}\n" \
                f"---------\n" \
