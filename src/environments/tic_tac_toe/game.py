@@ -34,6 +34,13 @@ class Game:
                 return self.board[combination[0]]
         return None
 
+    def check_end(self):
+        if self.check_victory() is not None:
+            return True
+        if not self.get_legal_actions():
+            return True
+        return False
+
     def display_board(self):
         return f"{self.board[0].value} | {self.board[1].value} | {self.board[2].value}\n" \
                f"---------\n" \
