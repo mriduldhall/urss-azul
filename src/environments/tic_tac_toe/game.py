@@ -17,6 +17,9 @@ class Game:
         return [position for position, marker in enumerate(self.board) if marker is Marker.EMPTY]
 
     def make_move(self, position):
+        if self.check_end():
+            raise ValueError("Game has already ended. No more moves can be made.")
+
         try:
             position = int(position)
         except (ValueError, TypeError):
