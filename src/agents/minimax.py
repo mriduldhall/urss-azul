@@ -39,5 +39,4 @@ class MinimaxAgent:
             scores.append((score, move))
 
         best_score, best_move = max(scores, key=lambda x: x[0])
-        print(f"MinimaxAgent: Score {best_score}")
         return best_move
