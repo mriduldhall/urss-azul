@@ -1,16 +1,7 @@
 class HumanAgent:
-    def __init__(self, game):
-        self.game = game
+    def __init__(self, input_handler):
+        self.input_handler = input_handler
 
     def make_move(self):
-        move = input("Please enter your move player " + self.game.current_player.value + ": ")
-        success = False
-        while not success:
-            legal_moves = self.game.get_legal_actions()
-            legal_moves = [str(move) for move in legal_moves]
-            if move in legal_moves:
-                success = True
-            else:
-                print("Invalid move. Please try again.")
-                move = input("Please enter your move player " + self.game.current_player.value + ": ")
+        move = self.input_handler.get_move()
         return move
