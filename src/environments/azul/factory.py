@@ -4,6 +4,9 @@ class Factory:
     def __init__(self):
         self.tiles = []
 
+    def is_empty(self):
+        return len(self.tiles) == 0
+
     def add_tile(self, tile):
         if not isinstance(tile, Tiles):
             raise ValueError("Invalid tile. Must be an instance of Tiles Enum.")
