@@ -20,6 +20,8 @@ class PatternLine:
             overflow = 0
         self.colour = tile
         self.count += number
+        if self.count > self.size:
+            self.count = self.size
         return overflow
 
     def clear(self):
