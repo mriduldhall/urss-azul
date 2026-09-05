@@ -58,7 +58,7 @@ class Game:
         cloned_game.current_player = self.current_player
         return cloned_game
 
-    def display_board(self):
+    def display_game(self):
         return f"{self.board[0].value} | {self.board[1].value} | {self.board[2].value}\n" \
                f"---------\n" \
                f"{self.board[3].value} | {self.board[4].value} | {self.board[5].value}\n" \

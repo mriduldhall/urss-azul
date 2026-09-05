@@ -7,14 +7,14 @@ class Runner:
     def run_game(self):
         end = self.game.check_end()
         while not end:
-            print(self.game.display_board())
+            print(self.game.display_game())
             if self.game.current_player == self.game.player_one_marker:
                 move = self.player_one_agent.make_move()
             else:
                 move = self.player_two_agent.make_move()
             self.game.make_move(move)
             end = self.game.check_end()
-        print(self.game.display_board())
+        print(self.game.display_game())
         winner = self.game.check_victory()
         if winner:
             print(f"Player {winner.value} wins!")
