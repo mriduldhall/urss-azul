@@ -65,6 +65,21 @@ class Wall:
 
         return score
 
+    def calculate_bonus(self, row, column):
+        bonus = 0
+
+        if all(self.grid[row]):
+            bonus += 2
+
+        if all(self.grid[i][column] for i in range(5)):
+            bonus += 7
+
+        tile_type = self.PATTERN[row][column]
+        if all(self.grid[i][j] for i in range(5) for j in range(5) if self.PATTERN[i][j] == tile_type):
+            bonus += 10
+
+        return bonus
+
     def place_tile(self, pattern_line_index, tile):
         if pattern_line_index < 0 or pattern_line_index >= 5:
             raise ValueError("Invalid pattern line index. Must be between 0 and 4.")
@@ -80,4 +95,4 @@ class Wall:
             raise ValueError("Tile already placed in this position on the wall.")
 
         self.grid[row][column] = True
-        return self.calculate_score(row, column)
+        return self.calculate_score(row, column) + self.calculate_bonus(row, column)
