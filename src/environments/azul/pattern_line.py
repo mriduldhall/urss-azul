@@ -31,4 +31,4 @@ class PatternLine:
         colour = self.colour
         self.count = 0
         self.colour = None
-        return number, colour
+        return number - 1, colour
