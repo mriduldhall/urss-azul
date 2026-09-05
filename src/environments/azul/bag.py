@@ -9,7 +9,7 @@ class Bag:
     def check_empty(self):
         return len(self.tiles) == 0
 
-    def initialize_bag(self):
+    def initialise_bag(self):
         if self.check_empty() and len(self.discard) == 0:
             for tile in Tiles:
                 if tile is not Tiles.STARTING:
