@@ -54,7 +54,7 @@ class Game:
     def complete_round_end(self):
         if self.player_one.next_starting_player():
             self.current_player = self.player_two #Inverted since players switched again later
-        else:
+        elif self.player_two.next_starting_player():
             self.current_player = self.player_one
 
         discard = self.current_player.resolve_round()

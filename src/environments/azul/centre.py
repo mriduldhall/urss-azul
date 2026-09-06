@@ -8,7 +8,7 @@ class Centre:
         self.tiles = [Tiles.STARTING]
 
     def check_empty(self):
-        return len(self.tiles) == 0
+        return len(self.tiles) == 0 or (len(self.tiles) == 1 and self.tiles[0] == Tiles.STARTING)
 
     def check_starting_tile(self):
         return Tiles.STARTING in self.tiles
