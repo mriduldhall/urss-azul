@@ -121,6 +121,10 @@ class Game:
                 return 1
             elif self.player_two.score > self.player_one.score:
                 return 2
+            elif self.player_one.wall.completed_rows() > self.player_two.wall.completed_rows():
+                return 1
+            elif self.player_two.wall.completed_rows() > self.player_one.wall.completed_rows():
+                return 2
         return None
 
     def check_end(self):

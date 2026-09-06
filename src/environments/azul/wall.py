@@ -18,6 +18,9 @@ class Wall:
                 return True
         return False
 
+    def completed_rows(self):
+        return sum(1 for row in self.grid if all(row))
+
     # noinspection DuplicatedCode
     def calculate_score(self, row, column):
         score = 0
