@@ -40,7 +40,7 @@ class Game:
         ]
         for combination in possible_combinations:
             if self.board[combination[0]] == self.board[combination[1]] == self.board[combination[2]] != Marker.EMPTY:
-                return self.board[combination[0]]
+                return self.board[combination[0]].value
         return None
 
     def check_end(self):

@@ -17,6 +17,6 @@ class Runner:
         print(self.game.display_game())
         winner = self.game.check_victory()
         if winner:
-            print(f"Player {winner.value} wins!")
+            print(f"Player {winner} wins!")
         else:
             print("It's a tie!")
