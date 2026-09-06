@@ -22,7 +22,9 @@ class Game:
         for factory_index, factory in enumerate(self.factories):
             for tile in set(factory.tiles):
                 for pattern_line_index in range(5):
-                    legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.PATTERN_LINE, pattern_line_index))
+                    pattern_line =  self.current_player.pattern_lines[pattern_line_index]
+                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile):
+                        legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.PATTERN_LINE, pattern_line_index))
                 legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.FLOOR_LINE, 0))
 
         if not self.centre.check_empty():
@@ -30,7 +32,9 @@ class Game:
                 if tile == Tiles.STARTING:
                     continue
                 for pattern_line_index in range(5):
-                    legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.PATTERN_LINE, pattern_line_index))
+                    pattern_line = self.current_player.pattern_lines[pattern_line_index]
+                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile):
+                        legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.PATTERN_LINE, pattern_line_index))
                 legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.FLOOR_LINE, 0))
 
         return legal_actions
