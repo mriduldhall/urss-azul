@@ -38,5 +38,7 @@ class PlayerBoard:
                 self.score += self.wall.calculate_score(i, self.wall.PATTERN[i].index(colour))
                 discard.extend([colour] * number)
         self.score -= self.floor.points_lost()
+        if self.score <= 0:
+            self.score = 0
         discard.extend(self.floor.clear())
         return discard
