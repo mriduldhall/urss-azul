@@ -22,6 +22,7 @@ class FloorLine:
 
     def clear(self):
         removed_tiles = self.tiles.copy()
-        removed_tiles.remove(Tiles.STARTING)
+        if Tiles.STARTING in removed_tiles:
+            removed_tiles.remove(Tiles.STARTING)
         self.tiles.clear()
         return removed_tiles
