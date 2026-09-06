@@ -15,6 +15,7 @@ class Game:
         self.player_two = PlayerBoard(2)
         self.current_player = self.player_one
         self.renderer = AzulRenderer(self)
+        self.initialise_game()
 
     def get_legal_actions(self):
         legal_actions = []
@@ -49,8 +50,8 @@ class Game:
         for tile in discard:
             self.bag.discard_tile(tile)
 
-        self.current_player = self.player_one if self.current_player is self.player_two else self.player_two
-        discard = self.current_player.resolve_round()
+        other_player = self.player_one if self.current_player is self.player_two else self.player_two
+        discard = other_player.resolve_round()
         for tile in discard:
             self.bag.discard_tile(tile)
 
@@ -93,6 +94,8 @@ class Game:
             self.complete_round_end()
             if not (self.player_one.wall.check_end() or self.player_two.wall.check_end()):
                 self.setup_next_round()
+
+        self.current_player = self.player_one if self.current_player is self.player_two else self.player_two
 
     def check_victory(self):
         if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():

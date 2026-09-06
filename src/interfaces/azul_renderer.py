@@ -2,7 +2,7 @@ import os
 import re
 import shutil
 
-from src.environments.azul.tiles import Tiles
+from environments.azul.tiles import Tiles
 
 
 class AzulRenderer:
