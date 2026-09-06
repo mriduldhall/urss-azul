@@ -99,3 +99,8 @@ class Wall:
 
         self.grid[row][column] = True
         return self.calculate_score(row, column) + self.calculate_bonus(row, column)
+
+    def clone(self):
+        clone = Wall()
+        clone.grid = [row[:] for row in self.grid]
+        return clone

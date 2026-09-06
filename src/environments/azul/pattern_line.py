@@ -32,3 +32,9 @@ class PatternLine:
         self.count = 0
         self.colour = None
         return number - 1, colour
+
+    def clone(self):
+        clone = PatternLine(self.size)
+        clone.count = self.count
+        clone.colour = self.colour
+        return clone

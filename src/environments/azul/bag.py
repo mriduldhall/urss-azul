@@ -37,3 +37,9 @@ class Bag:
         if not isinstance(tile, Tiles):
             raise ValueError("Invalid tile. Must be an instance of Tiles Enum.")
         self.discard.append(tile)
+
+    def clone(self):
+        clone = Bag()
+        clone.tiles = self.tiles.copy()
+        clone.discard = self.discard.copy()
+        return clone

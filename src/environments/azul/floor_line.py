@@ -26,3 +26,8 @@ class FloorLine:
             removed_tiles.remove(Tiles.STARTING)
         self.tiles.clear()
         return removed_tiles
+
+    def clone(self):
+        clone = FloorLine()
+        clone.tiles = self.tiles.copy()
+        return clone

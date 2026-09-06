@@ -7,7 +7,7 @@ from interfaces.azul_renderer import AzulRenderer
 from .azul_move import SourceType, DestinationType, AzulMove
 
 class Game:
-    def __init__(self):
+    def __init__(self, initialise=True):
         self.bag = Bag()
         self.factories = [Factory() for _ in range(5)]
         self.centre = Centre()
@@ -15,7 +15,8 @@ class Game:
         self.player_two = PlayerBoard(2)
         self.current_player = self.player_one
         self.renderer = AzulRenderer(self)
-        self.initialise_game()
+        if initialise:
+            self.initialise_game()
 
     def get_legal_actions(self):
         legal_actions = []
@@ -137,6 +138,17 @@ class Game:
               (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end()):
             return True
         return False
+
+    def clone(self):
+        clone = Game(initialise=False)
+        clone.bag = self.bag.clone()
+        clone.factories = [factory.clone() for factory in self.factories]
+        clone.centre = self.centre.clone()
+        clone.player_one = self.player_one.clone()
+        clone.player_two = self.player_two.clone()
+        clone.current_player = clone.player_one if self.current_player is self.player_one else clone.player_two
+        clone.renderer = AzulRenderer(clone)
+        return clone
 
     def display_game(self):
         return self.renderer.render()

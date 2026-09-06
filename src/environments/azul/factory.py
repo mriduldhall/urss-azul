@@ -24,3 +24,8 @@ class Factory:
         number = self.tiles.count(tile)
         self.tiles = [i for i in self.tiles if i != tile]
         return number
+
+    def clone(self):
+        clone = Factory()
+        clone.tiles = self.tiles.copy()
+        return clone

@@ -41,3 +41,11 @@ class PlayerBoard:
             self.score = 0
         discard.extend(self.floor.clear())
         return discard
+
+    def clone(self):
+        clone = PlayerBoard(self.value)
+        clone.score = self.score
+        clone.pattern_lines = [pattern_line.clone() for pattern_line in self.pattern_lines]
+        clone.wall = self.wall.clone()
+        clone.floor = self.floor.clone()
+        return clone
