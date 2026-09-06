@@ -34,8 +34,7 @@ class PlayerBoard:
         for i, pattern_line in enumerate(self.pattern_lines):
             if pattern_line.is_complete():
                 number, colour = pattern_line.clear()
-                self.wall.place_tile(i, colour)
-                self.score += self.wall.calculate_score(i, self.wall.PATTERN[i].index(colour))
+                self.score += self.wall.place_tile(i, colour)
                 discard.extend([colour] * number)
         self.score -= self.floor.points_lost()
         if self.score <= 0:
