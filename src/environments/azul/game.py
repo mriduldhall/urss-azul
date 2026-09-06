@@ -1,9 +1,10 @@
 from bag import Bag
+from tiles import Tiles
 from centre import Centre
 from factory import Factory
 from player_board import PlayerBoard
 from interfaces.azul_renderer import AzulRenderer
-from azul_move import SourceType, DestinationType
+from azul_move import SourceType, DestinationType, AzulMove
 
 class Game:
     def __init__(self):
@@ -14,6 +15,24 @@ class Game:
         self.player_two = PlayerBoard()
         self.current_player = self.player_one
         self.renderer = AzulRenderer(self)
+
+    def get_legal_actions(self):
+        legal_actions = []
+        for factory_index, factory in enumerate(self.factories):
+            for tile in set(factory.tiles):
+                for pattern_line_index in range(5):
+                    legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.PATTERN_LINE, pattern_line_index))
+                legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.FLOOR_LINE, 0))
+
+        if not self.centre.check_empty():
+            for tile in set(self.centre.tiles):
+                if tile == Tiles.STARTING:
+                    continue
+                for pattern_line_index in range(5):
+                    legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.PATTERN_LINE, pattern_line_index))
+                legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.FLOOR_LINE, 0))
+
+        return legal_actions
 
     def initialise_game(self):
         self.bag.initialise_bag()
