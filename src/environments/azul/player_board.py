@@ -15,10 +15,14 @@ class PlayerBoard:
     def next_starting_player(self):
         return self.floor.first_player_tile()
 
-    def place_tiles(self, pattern_line_index, tile, number, starting_tile=False):
-        if pattern_line_index < 0 or pattern_line_index >= len(self.pattern_lines):
+    def place_tiles(self, pattern_line_index, tile, number, starting_tile=False, floor_line=False):
+        if (pattern_line_index < 0 or pattern_line_index >= len(self.pattern_lines)) and not floor_line:
             raise ValueError("Invalid pattern line index.")
-        overflow = self.pattern_lines[pattern_line_index].add_tiles(tile, number)
+        if floor_line:
+            self.floor.add_tiles(tile, number)
+            overflow = 0
+        else:
+            overflow = self.pattern_lines[pattern_line_index].add_tiles(tile, number)
         if starting_tile:
             self.floor.add_tiles(Tiles.STARTING, 1)
         if overflow > 0:
