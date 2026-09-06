@@ -11,8 +11,8 @@ class Game:
         self.bag = Bag()
         self.factories = [Factory() for _ in range(5)]
         self.centre = Centre()
-        self.player_one = PlayerBoard()
-        self.player_two = PlayerBoard()
+        self.player_one = PlayerBoard(1)
+        self.player_two = PlayerBoard(2)
         self.current_player = self.player_one
         self.renderer = AzulRenderer(self)
 

@@ -4,7 +4,8 @@ from floor_line import FloorLine
 from pattern_line import PatternLine
 
 class PlayerBoard:
-    def __init__(self):
+    def __init__(self, value):
+        self.value = value
         self.score = 0
         self.pattern_lines = [
             PatternLine(size) for size in range(1, 6)
