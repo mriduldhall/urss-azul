@@ -9,6 +9,9 @@ class Bag:
     def check_empty(self):
         return len(self.tiles) == 0
 
+    def check_discard_empty(self):
+        return len(self.discard) == 0
+
     def initialise_bag(self):
         if self.check_empty() and len(self.discard) == 0:
             for tile in Tiles:

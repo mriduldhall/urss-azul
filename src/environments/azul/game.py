@@ -67,11 +67,13 @@ class Game:
             self.bag.discard_tile(tile)
 
     def setup_next_round(self):
-        if self.bag.check_empty():
+        if self.bag.check_empty() and not self.bag.check_discard_empty():
             self.bag.shuffle_bag()
 
         for factory in self.factories:
             for _ in range(4):
+                if self.bag.check_empty() and not self.bag.check_discard_empty():
+                    self.bag.shuffle_bag()
                 if not self.bag.check_empty():
                     factory.add_tile(self.bag.draw_tile())
 
