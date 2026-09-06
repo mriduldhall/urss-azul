@@ -35,6 +35,7 @@ class Game:
         for tile in discard:
             self.bag.discard_tile(tile)
 
+    def setup_next_round(self):
         if self.bag.check_empty():
             self.bag.shuffle_bag()
 
@@ -71,9 +72,11 @@ class Game:
 
         if self.check_round_end():
             self.complete_round_end()
+            if not (self.player_one.wall.check_end() or self.player_two.wall.check_end()):
+                self.setup_next_round()
 
     def check_victory(self):
-        if self.player_one.wall.check_end() or self.player_two.wall.check_end():
+        if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():
             if self.player_one.score > self.player_two.score:
                 return 1
             elif self.player_two.score > self.player_one.score:
@@ -81,9 +84,11 @@ class Game:
         return None
 
     def check_end(self):
-        if self.check_victory() is not None:
+        victory = self.check_victory()
+        if victory is not None:
             return True
-        elif self.player_one.score == self.player_two.score:
+        elif ((self.player_one.score == self.player_two.score) and
+              (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end()):
             return True
         return False
 
