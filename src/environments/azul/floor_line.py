@@ -1,4 +1,4 @@
-from tiles import Tiles
+from .tiles import Tiles
 
 class FloorLine:
     PENALTIES = (1, 1, 2, 2, 2, 3, 3)

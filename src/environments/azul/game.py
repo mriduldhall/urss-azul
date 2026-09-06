@@ -1,10 +1,10 @@
-from bag import Bag
-from tiles import Tiles
-from centre import Centre
-from factory import Factory
-from player_board import PlayerBoard
+from .bag import Bag
+from .tiles import Tiles
+from .centre import Centre
+from .factory import Factory
+from .player_board import PlayerBoard
 from interfaces.azul_renderer import AzulRenderer
-from azul_move import SourceType, DestinationType, AzulMove
+from .azul_move import SourceType, DestinationType, AzulMove
 
 class Game:
     def __init__(self):

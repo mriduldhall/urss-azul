@@ -1,5 +1,5 @@
 from random import shuffle
-from tiles import Tiles
+from .tiles import Tiles
 
 class Bag:
     def __init__(self):

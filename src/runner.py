@@ -8,7 +8,7 @@ class Runner:
         end = self.game.check_end()
         while not end:
             print(self.game.display_game())
-            if self.game.current_player == self.game.player_one_marker:
+            if self.game.current_player == self.game.player_one:
                 move = self.player_one_agent.make_move()
             else:
                 move = self.player_two_agent.make_move()

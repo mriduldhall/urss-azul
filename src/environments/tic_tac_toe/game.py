@@ -8,9 +8,9 @@ class Marker(Enum):
 
 class Game:
     def __init__(self):
-        self.player_one_marker = Marker.X
-        self.player_two_marker = Marker.O
-        self.current_player = self.player_one_marker
+        self.player_one = Marker.X
+        self.player_two = Marker.O
+        self.current_player = self.player_one
         self.board = [Marker.EMPTY] * 9
 
     def get_legal_actions(self):
@@ -29,7 +29,7 @@ class Game:
             raise ValueError("Invalid move. Position is either occupied or out of bounds.")
 
         self.board[position] = self.current_player
-        self.current_player = self.player_two_marker if self.current_player is self.player_one_marker else self.player_one_marker
+        self.current_player = self.player_two if self.current_player is self.player_one else self.player_one
         return True
 
     def check_victory(self):
@@ -53,8 +53,8 @@ class Game:
     def clone(self):
         cloned_game = Game()
         cloned_game.board = self.board.copy()
-        cloned_game.player_one_marker = self.player_one_marker
-        cloned_game.player_two_marker = self.player_two_marker
+        cloned_game.player_one = self.player_one
+        cloned_game.player_two = self.player_two
         cloned_game.current_player = self.current_player
         return cloned_game
 

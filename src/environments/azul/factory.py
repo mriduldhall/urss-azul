@@ -1,4 +1,4 @@
-from tiles import Tiles
+from .tiles import Tiles
 
 class Factory:
     def __init__(self):

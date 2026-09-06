@@ -1,7 +1,7 @@
-from wall import Wall
-from tiles import Tiles
-from floor_line import FloorLine
-from pattern_line import PatternLine
+from .wall import Wall
+from .tiles import Tiles
+from .floor_line import FloorLine
+from .pattern_line import PatternLine
 
 class PlayerBoard:
     def __init__(self, value):
