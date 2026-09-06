@@ -90,6 +90,13 @@ class Game:
         tiles_taken = source.get_tile(move.tile)
         self.current_player.place_tiles(move.destination_index, move.tile, tiles_taken, starting, floor)
 
+        if move.source_type is SourceType.FACTORY:
+            while not source.is_empty():
+                tile = source.tiles[0]
+                number = source.get_tile(source.tiles[0])
+                for _ in range(number):
+                    self.centre.add_tile(tile)
+
         if self.check_round_end():
             self.complete_round_end()
             if not (self.player_one.wall.check_end() or self.player_two.wall.check_end()):
