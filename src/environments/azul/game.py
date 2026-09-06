@@ -22,6 +22,29 @@ class Game:
                 factory.add_tile(self.bag.draw_tile())
         self.centre.reset_centre()
 
+    def check_round_end(self):
+        return all(factory.is_empty() for factory in self.factories) and self.centre.check_empty()
+
+    def complete_round_end(self):
+        discard = self.current_player.resolve_round()
+        for tile in discard:
+            self.bag.discard_tile(tile)
+
+        self.current_player = self.player_one if self.current_player is self.player_two else self.player_two
+        discard = self.current_player.resolve_round()
+        for tile in discard:
+            self.bag.discard_tile(tile)
+
+        if self.bag.check_empty():
+            self.bag.shuffle_bag()
+
+        for factory in self.factories:
+            for _ in range(4):
+                if not self.bag.check_empty():
+                    factory.add_tile(self.bag.draw_tile())
+
+        self.centre.reset_centre()
+
     def make_move(self, move):
         if self.check_end():
             raise ValueError("Game has already ended. No more moves can be made.")
@@ -45,6 +68,9 @@ class Game:
 
         tiles_taken = source.get_tile(move.tile)
         self.current_player.place_tiles(move.destination_index, move.tile, tiles_taken, starting, floor)
+
+        if self.check_round_end():
+            self.complete_round_end()
 
     def check_victory(self):
         if self.player_one.wall.check_end() or self.player_two.wall.check_end():
