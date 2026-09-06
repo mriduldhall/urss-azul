@@ -50,6 +50,11 @@ class Game:
         return all(factory.is_empty() for factory in self.factories) and self.centre.check_empty()
 
     def complete_round_end(self):
+        if self.player_one.next_starting_player():
+            self.current_player = self.player_two #Inverted since players switched again later
+        else:
+            self.current_player = self.player_one
+
         discard = self.current_player.resolve_round()
         for tile in discard:
             self.bag.discard_tile(tile)

@@ -12,6 +12,6 @@ from runner import Runner
 if __name__ == '__main__':
     game = AzulGame()
     player_one_agent = HumanAgent(AzulInputHandler(game))
-    player_two_agent = HumanAgent(AzulInputHandler(game))
+    player_two_agent = RandomAgent(game)
     runner = Runner(game, player_one_agent, player_two_agent)
     runner.run_game()
