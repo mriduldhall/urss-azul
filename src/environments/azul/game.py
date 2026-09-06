@@ -23,7 +23,8 @@ class Game:
             for tile in set(factory.tiles):
                 for pattern_line_index in range(5):
                     pattern_line =  self.current_player.pattern_lines[pattern_line_index]
-                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile):
+                    wall_index = self.current_player.wall.PATTERN[pattern_line_index].index(tile)
+                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile) and not self.current_player.wall.grid[pattern_line_index][wall_index]:
                         legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.PATTERN_LINE, pattern_line_index))
                 legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.FLOOR_LINE, 0))
 
@@ -33,7 +34,8 @@ class Game:
                     continue
                 for pattern_line_index in range(5):
                     pattern_line = self.current_player.pattern_lines[pattern_line_index]
-                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile):
+                    wall_index = self.current_player.wall.PATTERN[pattern_line_index].index(tile)
+                    if not pattern_line.is_complete() and (pattern_line.get_colour() is None or pattern_line.get_colour() == tile) and not self.current_player.wall.grid[pattern_line_index][wall_index]:
                         legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.PATTERN_LINE, pattern_line_index))
                 legal_actions.append(AzulMove(SourceType.CENTER, 0, tile, DestinationType.FLOOR_LINE, 0))
 
