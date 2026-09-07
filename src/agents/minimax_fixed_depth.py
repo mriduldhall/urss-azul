@@ -18,7 +18,7 @@ class MinimaxFixedDepthAgent:
             else:
                 return -float('inf')
 
-        if current_depth == self.max_depth:
+        if current_depth >= self.max_depth:
             return self.heuristic.evaluate(game, is_maximising)
 
         scores = []
