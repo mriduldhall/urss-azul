@@ -121,13 +121,13 @@ class Game:
     def check_victory(self):
         if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():
             if self.player_one.score > self.player_two.score:
-                return 1
+                return self.player_one.value
             elif self.player_two.score > self.player_one.score:
-                return 2
+                return self.player_two.value
             elif self.player_one.wall.completed_rows() > self.player_two.wall.completed_rows():
-                return 1
+                return self.player_one.value
             elif self.player_two.wall.completed_rows() > self.player_one.wall.completed_rows():
-                return 2
+                return self.player_two.value
         return None
 
     def check_end(self):

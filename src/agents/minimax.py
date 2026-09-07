@@ -6,7 +6,7 @@ class MinimaxAgent:
     def minimax(self, game, is_maximising):
         if game.check_end():
             winner = game.check_victory()
-            if winner == self.maximising_player:
+            if winner == self.maximising_player.value:
                 return float('inf')
             elif winner is None:
                 return 0
