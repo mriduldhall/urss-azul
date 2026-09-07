@@ -3,6 +3,9 @@ class MinimaxAgent:
         self.game = game
         self.maximising_player = None
 
+    def check_if_maximising(self, game):
+        return game.current_player.value == self.maximising_player.value
+
     def minimax(self, game, is_maximising):
         if game.check_end():
             winner = game.check_victory()
@@ -17,7 +20,8 @@ class MinimaxAgent:
         for move in game.get_legal_actions():
             cloned_game = game.clone()
             cloned_game.make_move(move)
-            score = self.minimax(cloned_game, not is_maximising)
+            next_is_maximising = self.check_if_maximising(cloned_game)
+            score = self.minimax(cloned_game, next_is_maximising)
             scores.append(score)
 
         if is_maximising:
@@ -29,13 +33,13 @@ class MinimaxAgent:
         game = self.game.clone()
         self.maximising_player = game.current_player
 
-        maximising = True
         possible_moves = game.get_legal_actions()
         scores = []
         for move in possible_moves:
             cloned_game = game.clone()
             cloned_game.make_move(move)
-            score = self.minimax(cloned_game, not maximising)
+            is_maximising = self.check_if_maximising(cloned_game)
+            score = self.minimax(cloned_game, is_maximising)
             scores.append((score, move))
 
         best_score, best_move = max(scores, key=lambda x: x[0])
