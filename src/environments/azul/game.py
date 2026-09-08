@@ -144,7 +144,7 @@ class Game:
     def clone(self):
         rng_clone = Random()
         rng_clone.setstate(self.rng.getstate())
-        clone = Game(initialise=False)
+        clone = Game(initialise=False, rng=rng_clone)
         clone.bag = self.bag.clone(rng_clone)
         clone.factories = [factory.clone() for factory in self.factories]
         clone.centre = self.centre.clone()
