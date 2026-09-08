@@ -23,7 +23,7 @@ class Game:
     def get_legal_actions(self):
         legal_actions = []
         for factory_index, factory in enumerate(self.factories):
-            for tile in set(factory.tiles):
+            for tile in sorted(set(factory.tiles), key=lambda x: x.value):
                 for pattern_line_index in range(5):
                     pattern_line =  self.current_player.pattern_lines[pattern_line_index]
                     wall_index = self.current_player.wall.PATTERN[pattern_line_index].index(tile)
@@ -32,7 +32,7 @@ class Game:
                 legal_actions.append(AzulMove(SourceType.FACTORY, factory_index, tile, DestinationType.FLOOR_LINE, 0))
 
         if not self.centre.check_empty():
-            for tile in set(self.centre.tiles):
+            for tile in sorted(set(self.centre.tiles), key=lambda x: x.value):
                 if tile == Tiles.STARTING:
                     continue
                 for pattern_line_index in range(5):
