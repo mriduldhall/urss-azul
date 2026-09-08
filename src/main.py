@@ -11,13 +11,14 @@ from interfaces.tic_tac_toe_console import TicTacToeInputHandler
 from heuristics.azul_net_expected import AzulNetExpectedHeuristic
 from runner import Runner
 
-
 if __name__ == '__main__':
     game_seed = 42
+    player_one_seed = 123
+    player_two_seed = 456
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MinimaxFixedDepthAgent(game, AzulNetExpectedHeuristic(), max_depth=3)
-    player_two_agent = RandomAgent(game)
+    player_one_agent = HumanAgent(AzulInputHandler(game))
+    player_two_agent = RandomAgent(game, rng=Random(player_two_seed))
     runner = Runner(game, player_one_agent, player_two_agent)
     runner.run_game()
