@@ -1,3 +1,4 @@
+from random import Random
 from agents.human import HumanAgent
 from agents.random import RandomAgent
 from agents.minimax import MinimaxAgent
@@ -12,7 +13,10 @@ from runner import Runner
 
 
 if __name__ == '__main__':
-    game = AzulGame()
+    game_seed = 42
+
+    # game = AzulGame()
+    game = AzulGame(rng=Random(game_seed))
     player_one_agent = MinimaxFixedDepthAgent(game, AzulNetExpectedHeuristic(), max_depth=3)
     player_two_agent = RandomAgent(game)
     runner = Runner(game, player_one_agent, player_two_agent)

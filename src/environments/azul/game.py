@@ -1,3 +1,4 @@
+from random import Random
 from .bag import Bag
 from .tiles import Tiles
 from .centre import Centre
@@ -7,8 +8,9 @@ from interfaces.azul_renderer import AzulRenderer
 from .azul_move import SourceType, DestinationType, AzulMove
 
 class Game:
-    def __init__(self, initialise=True):
-        self.bag = Bag()
+    def __init__(self, initialise=True, rng=None):
+        self.rng = rng if rng is not None else Random()
+        self.bag = Bag(self.rng)
         self.factories = [Factory() for _ in range(5)]
         self.centre = Centre()
         self.player_one = PlayerBoard(1)
@@ -140,8 +142,10 @@ class Game:
         return False
 
     def clone(self):
+        rng_clone = Random()
+        rng_clone.setstate(self.rng.getstate())
         clone = Game(initialise=False)
-        clone.bag = self.bag.clone()
+        clone.bag = self.bag.clone(rng_clone)
         clone.factories = [factory.clone() for factory in self.factories]
         clone.centre = self.centre.clone()
         clone.player_one = self.player_one.clone()

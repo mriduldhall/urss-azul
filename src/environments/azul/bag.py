@@ -1,8 +1,8 @@
-from random import shuffle
 from .tiles import Tiles
 
 class Bag:
-    def __init__(self):
+    def __init__(self, rng):
+        self.rng = rng
         self.tiles = []
         self.discard = []
 
@@ -17,7 +17,7 @@ class Bag:
             for tile in Tiles:
                 if tile is not Tiles.STARTING:
                     self.tiles.extend([tile] * 20)
-            shuffle(self.tiles)
+            self.rng.shuffle(self.tiles)
 
     def shuffle_bag(self):
         if not self.check_empty():
@@ -26,7 +26,7 @@ class Bag:
             raise ValueError("Discard pile is empty. Cannot shuffle.")
         self.tiles = self.discard.copy()
         self.discard.clear()
-        shuffle(self.tiles)
+        self.rng.shuffle(self.tiles)
 
     def draw_tile(self):
         if self.check_empty():
@@ -38,8 +38,8 @@ class Bag:
             raise ValueError("Invalid tile. Must be an instance of Tiles Enum.")
         self.discard.append(tile)
 
-    def clone(self):
-        clone = Bag()
+    def clone(self, rng):
+        clone = Bag(rng)
         clone.tiles = self.tiles.copy()
         clone.discard = self.discard.copy()
         return clone
