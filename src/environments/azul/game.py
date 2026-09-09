@@ -122,10 +122,7 @@ class Game:
         if self.check_round_end():
             self.complete_round_end()
             if not (self.player_one.wall.check_end() or self.player_two.wall.check_end()):
-                if len(self.bag.tiles) < 20:
-                    self.refill_needed = True
-                else:
-                    self.setup_next_round()
+                self.refill_needed = True
 
     def make_move(self, move):
         self.apply_deterministic_move(move)
