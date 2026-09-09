@@ -13,8 +13,15 @@ class Game:
         self.current_player = self.player_one
         self.board = [Marker.EMPTY] * 9
 
+    @staticmethod
+    def chance_node_required():
+        return False
+
     def get_legal_actions(self):
         return [position for position, marker in enumerate(self.board) if marker is Marker.EMPTY]
+
+    def apply_deterministic_move(self, position):
+        return self.make_move(position)
 
     def make_move(self, position):
         if self.check_end():
