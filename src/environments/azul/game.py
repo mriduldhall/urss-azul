@@ -17,8 +17,12 @@ class Game:
         self.player_two = PlayerBoard(2)
         self.current_player = self.player_one
         self.renderer = AzulRenderer(self)
+        self.refill_needed = False
         if initialise:
             self.initialise_game()
+
+    def chance_node_required(self):
+        return self.refill_needed
 
     def get_legal_actions(self):
         legal_actions = []
@@ -56,9 +60,9 @@ class Game:
 
     def complete_round_end(self):
         if self.player_one.next_starting_player():
-            self.current_player = self.player_two #Inverted since players switched again later
-        elif self.player_two.next_starting_player():
             self.current_player = self.player_one
+        elif self.player_two.next_starting_player():
+            self.current_player = self.player_two
 
         discard = self.current_player.resolve_round()
         for tile in discard:
@@ -82,7 +86,7 @@ class Game:
 
         self.centre.reset_centre()
 
-    def make_move(self, move):
+    def apply_deterministic_move(self, move):
         if self.check_end():
             raise ValueError("Game has already ended. No more moves can be made.")
 
@@ -113,12 +117,22 @@ class Game:
                 for _ in range(number):
                     self.centre.add_tile(tile)
 
+        self.current_player = self.player_one if self.current_player is self.player_two else self.player_two
+
         if self.check_round_end():
             self.complete_round_end()
             if not (self.player_one.wall.check_end() or self.player_two.wall.check_end()):
-                self.setup_next_round()
+                if len(self.bag.tiles) < 20:
+                    self.refill_needed = True
+                else:
+                    self.setup_next_round()
 
-        self.current_player = self.player_one if self.current_player is self.player_two else self.player_two
+    def make_move(self, move):
+        self.apply_deterministic_move(move)
+
+        if self.refill_needed:
+            self.setup_next_round()
+            self.refill_needed = False
 
     def check_victory(self):
         if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():
@@ -152,6 +166,7 @@ class Game:
         clone.player_two = self.player_two.clone()
         clone.current_player = clone.player_one if self.current_player is self.player_one else clone.player_two
         clone.renderer = AzulRenderer(clone)
+        clone.refill_needed = self.refill_needed
         return clone
 
     def display_game(self):
