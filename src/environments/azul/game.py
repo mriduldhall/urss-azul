@@ -89,6 +89,12 @@ class Game:
 
         self.centre.reset_centre()
 
+    def resolve_chance(self):
+        if not self.refill_needed:
+            raise ValueError("Chance node resolution is not required at this time.")
+        self.setup_next_round()
+        self.refill_needed = False
+
     def apply_deterministic_move(self, move):
         if self.check_end():
             raise ValueError("Game has already ended. No more moves can be made.")
@@ -130,9 +136,8 @@ class Game:
     def make_move(self, move):
         self.apply_deterministic_move(move)
 
-        if self.refill_needed:
-            self.setup_next_round()
-            self.refill_needed = False
+        if self.chance_node_required():
+            self.resolve_chance()
 
     def check_victory(self):
         if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():
