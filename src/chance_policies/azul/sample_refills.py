@@ -11,7 +11,27 @@ class SampleRefillsPolicy:
     def start_search(self):
         self.seed = self.rng.getrandbits(128)
 
+    def generate_seed(self, depth, sample_index):
+        return f"{self.seed}:{depth}:{sample_index}"
+
+    @staticmethod
+    def generate_sample(game, rng):
+        game.rng = rng
+        game.bag.rng = rng
+        game.bag.tiles.sort(key=lambda x: x.value)
+        game.bag.discard.sort(key=lambda x: x.value)
+        game.bag.rng.shuffle(game.bag.tiles)
+        game.resolve_chance()
+
     def get_outcomes(self, game, depth):
         if self.seed is None:
             raise ValueError("start_search() must be called before get_outcomes().")
-        return None
+
+        outcomes = []
+        for sample_index in range(self.samples):
+            sample_seed = self.generate_seed(depth, sample_index)
+            game_clone = game.clone()
+            self.generate_sample(game_clone, Random(sample_seed))
+            outcomes.append(game_clone)
+
+        return outcomes

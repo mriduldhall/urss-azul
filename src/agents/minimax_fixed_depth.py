@@ -36,7 +36,7 @@ class MinimaxFixedDepthAgent:
         if game.chance_node_required():
             if self.chance_policy is None:
                 raise ValueError("Chance policy required to evaluate chance nodes.")
-            return self.chance_node(game, is_maximising, current_depth)
+            return self.chance_node(game.clone(), is_maximising, current_depth)
 
         if current_depth >= self.max_depth:
             return self.heuristic.evaluate(game, is_maximising)
