@@ -12,7 +12,7 @@ class MinimaxFixedDepthAgent:
     def chance_node(self, game, is_maximising, current_depth):
         outcomes = self.chance_policy.get_outcomes(game)
 
-        if outcomes is None:
+        if outcomes is None or len(outcomes) == 0:
             return self.heuristic.evaluate(game, is_maximising)
 
         scores = 0
@@ -27,11 +27,11 @@ class MinimaxFixedDepthAgent:
         if game.check_end():
             winner = game.check_victory()
             if winner == self.maximising_player.value:
-                return float('inf')
+                return 1
             elif winner is None:
                 return 0
             else:
-                return -float('inf')
+                return -1
 
         if game.chance_node_required():
             if self.chance_policy is None:

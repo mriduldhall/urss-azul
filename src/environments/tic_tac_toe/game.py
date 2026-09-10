@@ -7,6 +7,9 @@ class Marker(Enum):
 
 
 class Game:
+    max_possible_score = 1
+    min_possible_score = -1
+
     def __init__(self):
         self.player_one = Marker.X
         self.player_two = Marker.O

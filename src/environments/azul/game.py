@@ -8,6 +8,9 @@ from interfaces.azul_renderer import AzulRenderer
 from .azul_move import SourceType, DestinationType, AzulMove
 
 class Game:
+    max_possible_score = 241
+    min_possible_score = -241
+
     def __init__(self, initialise=True, rng=None):
         self.rng = rng if rng is not None else Random()
         self.bag = Bag(self.rng)
