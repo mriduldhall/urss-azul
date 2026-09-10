@@ -9,8 +9,8 @@ class MinimaxFixedDepthAgent:
     def check_if_maximising(self, game):
         return game.current_player.value == self.maximising_player.value
 
-    def chance_node(self, game, is_maximising, current_depth):
-        outcomes = self.chance_policy.get_outcomes(game, current_depth)
+    def chance_node(self, game, is_maximising, current_depth, chance_depth):
+        outcomes = self.chance_policy.get_outcomes(game, chance_depth)
 
         if outcomes is None or len(outcomes) == 0:
             return self.heuristic.evaluate(game, is_maximising)
@@ -18,12 +18,12 @@ class MinimaxFixedDepthAgent:
         scores = 0
         for outcome in outcomes:
             next_is_maximising = self.check_if_maximising(outcome)
-            score = self.minimax(outcome, next_is_maximising, current_depth)
+            score = self.minimax(outcome, next_is_maximising, current_depth, chance_depth + 1)
             scores += score
 
         return scores / len(outcomes)
 
-    def minimax(self, game, is_maximising, current_depth):
+    def minimax(self, game, is_maximising, current_depth, chance_depth):
         if game.check_end():
             winner = game.check_victory()
             if winner == self.maximising_player.value:
@@ -36,7 +36,7 @@ class MinimaxFixedDepthAgent:
         if game.chance_node_required():
             if self.chance_policy is None:
                 raise ValueError("Chance policy required to evaluate chance nodes.")
-            return self.chance_node(game.clone(), is_maximising, current_depth)
+            return self.chance_node(game.clone(), is_maximising, current_depth, chance_depth)
 
         if current_depth >= self.max_depth:
             return self.heuristic.evaluate(game, is_maximising)
@@ -46,7 +46,7 @@ class MinimaxFixedDepthAgent:
             cloned_game = game.clone()
             cloned_game.apply_deterministic_move(move)
             next_is_maximising = self.check_if_maximising(cloned_game)
-            score = self.minimax(cloned_game, next_is_maximising, current_depth + 1)
+            score = self.minimax(cloned_game, next_is_maximising, current_depth + 1, chance_depth)
             scores.append(score)
 
         if is_maximising:
@@ -67,7 +67,7 @@ class MinimaxFixedDepthAgent:
             cloned_game = game.clone()
             cloned_game.apply_deterministic_move(move)
             is_maximising = self.check_if_maximising(cloned_game)
-            score = self.minimax(cloned_game, is_maximising, 1)
+            score = self.minimax(cloned_game, is_maximising, 1, 0)
             scores.append((score, move))
 
         best_score, best_move = max(scores, key=lambda x: x[0])
