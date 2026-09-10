@@ -58,6 +58,9 @@ class MinimaxFixedDepthAgent:
         game = self.game.clone()
         self.maximising_player = game.current_player
 
+        if self.chance_policy is not None:
+            self.chance_policy.start_search()
+
         possible_moves = game.get_legal_actions()
         scores = []
         for move in possible_moves:
