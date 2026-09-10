@@ -3,5 +3,5 @@ class RoundTerminationPolicy:
         pass
 
     @staticmethod
-    def get_outcomes(game):
+    def get_outcomes(game, depth):
         return None

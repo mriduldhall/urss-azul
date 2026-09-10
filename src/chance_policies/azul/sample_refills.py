@@ -11,7 +11,7 @@ class SampleRefillsPolicy:
     def start_search(self):
         self.seed = self.rng.getrandbits(128)
 
-    def get_outcomes(self, game):
+    def get_outcomes(self, game, depth):
         if self.seed is None:
             raise ValueError("start_search() must be called before get_outcomes().")
         return None
