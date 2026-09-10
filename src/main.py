@@ -10,6 +10,7 @@ from interfaces.azul_console import AzulInputHandler
 from interfaces.tic_tac_toe_console import TicTacToeInputHandler
 from heuristics.azul_net_expected import AzulNetExpectedHeuristic
 from chance_policies.azul.round_termination import RoundTerminationPolicy
+from chance_policies.azul.sample_refills import SampleRefillsPolicy
 from runner import Runner
 
 if __name__ == '__main__':
@@ -19,7 +20,15 @@ if __name__ == '__main__':
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MinimaxFixedDepthAgent(game, heuristic=AzulNetExpectedHeuristic(), max_depth=2, chance_policy=RoundTerminationPolicy())
-    player_two_agent = RandomAgent(game, rng=Random(player_two_seed))
+    player_one_agent = MinimaxFixedDepthAgent(
+        game,
+        heuristic=AzulNetExpectedHeuristic(),
+        max_depth=2,
+        chance_policy=SampleRefillsPolicy(samples=1, rng=Random(player_one_seed)),
+    )
+    player_two_agent = RandomAgent(
+        game,
+        rng=Random(player_two_seed),
+    )
     runner = Runner(game, player_one_agent, player_two_agent)
     runner.run_game()
