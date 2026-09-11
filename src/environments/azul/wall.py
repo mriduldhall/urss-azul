@@ -98,7 +98,7 @@ class Wall:
             raise ValueError("Tile already placed in this position on the wall.")
 
         self.grid[row][column] = True
-        return self.calculate_score(row, column) + self.calculate_bonus(row, column)
+        return self.calculate_score(row, column), self.calculate_bonus(row, column)
 
     def clone(self):
         clone = Wall()

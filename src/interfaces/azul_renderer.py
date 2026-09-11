@@ -82,8 +82,11 @@ class AzulRenderer:
 
     def _render_player(self, board, player_number):
         current_marker = ">" if self.game.current_player is board else " "
+        score = f"Score: {board.score}"
+        if board.bonus_score:
+            score += f" (+{board.bonus_score} end bonus; total {board.get_score()})"
         lines = [
-            f"{current_marker} PLAYER {player_number} - Score: {board.score}",
+            f"{current_marker} PLAYER {player_number} - {score}",
             "  Pattern   | Wall",
         ]
 

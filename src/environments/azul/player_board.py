@@ -7,11 +7,15 @@ class PlayerBoard:
     def __init__(self, value):
         self.value = value
         self.score = 0
+        self.bonus_score = 0
         self.pattern_lines = [
             PatternLine(size) for size in range(1, 6)
         ]
         self.wall = Wall()
         self.floor = FloorLine()
+
+    def get_score(self):
+        return self.score + self.bonus_score
 
     def next_starting_player(self):
         return self.floor.first_player_tile()
@@ -34,7 +38,9 @@ class PlayerBoard:
         for i, pattern_line in enumerate(self.pattern_lines):
             if pattern_line.is_complete():
                 number, colour = pattern_line.clear()
-                self.score += self.wall.place_tile(i, colour)
+                score, bonus = self.wall.place_tile(i, colour)
+                self.score += score
+                self.bonus_score += bonus
                 discard.extend([colour] * number)
         self.score -= self.floor.points_lost()
         if self.score <= 0:
@@ -45,6 +51,7 @@ class PlayerBoard:
     def clone(self):
         clone = PlayerBoard(self.value)
         clone.score = self.score
+        clone.bonus_score = self.bonus_score
         clone.pattern_lines = [pattern_line.clone() for pattern_line in self.pattern_lines]
         clone.wall = self.wall.clone()
         clone.floor = self.floor.clone()

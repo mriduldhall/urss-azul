@@ -141,9 +141,9 @@ class Game:
 
     def check_victory(self):
         if (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end():
-            if self.player_one.score > self.player_two.score:
+            if self.player_one.get_score() > self.player_two.get_score():
                 return self.player_one.value
-            elif self.player_two.score > self.player_one.score:
+            elif self.player_two.get_score() > self.player_one.get_score():
                 return self.player_two.value
             elif self.player_one.wall.completed_rows() > self.player_two.wall.completed_rows():
                 return self.player_one.value
@@ -155,7 +155,7 @@ class Game:
         victory = self.check_victory()
         if victory is not None:
             return True
-        elif ((self.player_one.score == self.player_two.score) and
+        elif ((self.player_one.get_score() == self.player_two.get_score()) and
               (self.player_one.wall.check_end() or self.player_two.wall.check_end()) and self.check_round_end()):
             return True
         return False
