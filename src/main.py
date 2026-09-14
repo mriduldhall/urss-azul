@@ -24,7 +24,7 @@ if __name__ == '__main__':
     player_one_agent = MinimaxAlphaBetaAgent(
         game,
         heuristic=AzulNetExpectedHeuristic(),
-        max_depth=3,
+        max_depth=4,
         chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
     )
     player_two_agent = RandomAgent(

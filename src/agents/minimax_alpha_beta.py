@@ -1,3 +1,4 @@
+#noinspection DuplicatedCode
 class MinimaxAlphaBetaAgent:
     def __init__(self, game, heuristic, max_depth, chance_policy=None):
         self.game = game
@@ -72,11 +73,13 @@ class MinimaxAlphaBetaAgent:
 
         possible_moves = game.get_legal_actions()
         scores = []
+        alpha = float('-inf')
         for move in possible_moves:
             cloned_game = game.clone()
             cloned_game.apply_deterministic_move(move)
             is_maximising = self.check_if_maximising(cloned_game)
-            score = self.minimax(cloned_game, is_maximising, 1, 0)
+            score = self.minimax(cloned_game, is_maximising, 1, 0, alpha)
+            alpha = max(alpha, score)
             scores.append((score, move))
 
         best_score, best_move = max(scores, key=lambda x: x[0])
