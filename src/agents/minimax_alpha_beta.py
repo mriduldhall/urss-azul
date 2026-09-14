@@ -42,14 +42,12 @@ class MinimaxAlphaBetaAgent:
         if current_depth >= self.max_depth:
             return self.heuristic.evaluate(game, is_maximising)
 
-        scores = []
         best = float('-inf') if is_maximising else float('inf')
         for move in game.get_legal_actions():
             cloned_game = game.clone()
             cloned_game.apply_deterministic_move(move)
             next_is_maximising = self.check_if_maximising(cloned_game)
             score = self.minimax(cloned_game, next_is_maximising, current_depth + 1, chance_depth, alpha, beta)
-            scores.append(score)
             if is_maximising:
                 best = max(best, score)
                 alpha = max(alpha, best)
@@ -60,9 +58,9 @@ class MinimaxAlphaBetaAgent:
                 break
 
         if is_maximising:
-            return max(scores)
+            return best
         else:
-            return min(scores)
+            return best
 
     def make_move(self):
         game = self.game.clone()
