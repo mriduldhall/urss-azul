@@ -3,6 +3,7 @@ from agents.human import HumanAgent
 from agents.random import RandomAgent
 from agents.minimax import MinimaxAgent
 from agents.mcts import MonteCarloTreeSearchAgent
+from agents.minimax_alpha_beta import MinimaxAlphaBetaAgent
 from agents.minimax_fixed_depth import MinimaxFixedDepthAgent
 from environments.azul.game import Game as AzulGame
 from environments.tic_tac_toe.game import Game as TicTacToeGame
@@ -20,11 +21,11 @@ if __name__ == '__main__':
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MinimaxFixedDepthAgent(
+    player_one_agent = MinimaxAlphaBetaAgent(
         game,
         heuristic=AzulNetExpectedHeuristic(),
-        max_depth=2,
-        chance_policy=SampleRefillsPolicy(samples=1, rng=Random(player_one_seed)),
+        max_depth=3,
+        chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
     )
     player_two_agent = RandomAgent(
         game,
