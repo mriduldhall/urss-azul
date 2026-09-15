@@ -6,6 +6,7 @@ from agents.mcts import MonteCarloTreeSearchAgent
 from agents.minimax_alpha_beta import MinimaxAlphaBetaAgent
 from agents.minimax_fixed_depth import MinimaxFixedDepthAgent
 from agents.minimax_alpha_beta_ordering import MinimaxAlphaBetaOrderingAgent
+from agents.minimax_iterative_deepening import MinimaxIterativeDeepeningAgent
 from environments.azul.game import Game as AzulGame
 from environments.tic_tac_toe.game import Game as TicTacToeGame
 from interfaces.azul_console import AzulInputHandler
@@ -24,10 +25,10 @@ if __name__ == '__main__':
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MinimaxAlphaBetaOrderingAgent(
+    player_one_agent = MinimaxIterativeDeepeningAgent(
         game,
         heuristic=AzulNetExpectedHeuristic(),
-        max_depth=4,
+        time_limit=5,
         chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
         ordering_policy=PointBasedPolicy(),
     )
