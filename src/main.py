@@ -14,6 +14,7 @@ from heuristics.azul_net_expected import AzulNetExpectedHeuristic
 from chance_policies.azul.round_termination import RoundTerminationPolicy
 from chance_policies.azul.sample_refills import SampleRefillsPolicy
 from order_policies.azul.net_score_gain import NetScoreGainPolicy
+from order_policies.azul.point_based import PointBasedPolicy
 from runner import Runner
 
 if __name__ == '__main__':
@@ -28,7 +29,7 @@ if __name__ == '__main__':
         heuristic=AzulNetExpectedHeuristic(),
         max_depth=4,
         chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
-        ordering_policy=NetScoreGainPolicy(),
+        ordering_policy=PointBasedPolicy(),
     )
     player_two_agent = RandomAgent(
         game,
