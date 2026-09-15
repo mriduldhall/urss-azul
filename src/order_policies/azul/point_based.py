@@ -18,24 +18,35 @@ class PointBasedPolicy:
     def score_row(game, move):
         if move.destination_type == DestinationType.FLOOR_LINE:
             return 0, 0
+
         if move.source_type == SourceType.FACTORY:
             tiles = game.factories[move.source_index].tiles.count(move.tile)
         else:
             tiles = game.centre.tiles.count(move.tile)
+
         existing_tiles = game.current_player.pattern_lines[move.destination_index].count
-        completion = (existing_tiles + tiles) / game.current_player.pattern_lines[move.destination_index].size
+        line_size = game.current_player.pattern_lines[move.destination_index].size
+
+        completion = (existing_tiles + tiles) / line_size
+        score = 0
+        if completion >= 1:
+            score = 3
+            overflow = (existing_tiles + tiles) - line_size
+            score += -1 * overflow
+            completion = 1
         if completion == 1:
-            return 3, completion
-        return 0, completion
+            return score, completion
+        return score, completion
 
     @staticmethod
     def score_column(game, move):
         if move.destination_type == DestinationType.FLOOR_LINE:
             return 0
-        index = game.current_player.wall.PATTERN[move.destination_index].index(move.tile)
-        if index == 0 or index == 4:
+
+        column = game.current_player.wall.PATTERN[move.destination_index].index(move.tile)
+        if column == 0 or column == 4:
             return 1
-        elif index == 1 or index == 3:
+        elif column == 1 or column == 3:
             return 2
         else:
             return 3
