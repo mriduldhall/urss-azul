@@ -15,6 +15,20 @@ class PointBasedPolicy:
         return 0
 
     @staticmethod
+    def score_row(game, move):
+        if move.destination_type == DestinationType.FLOOR_LINE:
+            return 0, 0
+        if move.source_type == SourceType.FACTORY:
+            tiles = game.factories[move.source_index].tiles.count(move.tile)
+        else:
+            tiles = game.centre.tiles.count(move.tile)
+        existing_tiles = game.current_player.pattern_lines[move.destination_index].count
+        completion = (existing_tiles + tiles) / game.current_player.pattern_lines[move.destination_index].size
+        if completion == 1:
+            return 3, completion
+        return 0, completion
+
+    @staticmethod
     def score_column(game, move):
         if move.destination_type == DestinationType.FLOOR_LINE:
             return 0
@@ -29,5 +43,7 @@ class PointBasedPolicy:
     def score(self, game, move):
         score = 0
         score += self.score_destination(game, move)
+        row_score, completion = self.score_row(game, move)
+        score += row_score
         score += self.score_column(game, move)
-        return score
+        return score, completion
