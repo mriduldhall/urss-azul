@@ -2,11 +2,12 @@ from time import perf_counter
 
 #noinspection DuplicatedCode
 class MinimaxIterativeDeepeningAgent:
-    def __init__(self, game, heuristic, time_limit, chance_policy=None, ordering_policy=None):
+    def __init__(self, game, heuristic, time_limit, max_depth, chance_policy=None, ordering_policy=None):
         self.game = game
         self.maximising_player = None
         self.heuristic = heuristic
         self.time_limit = time_limit
+        self.max_depth = max_depth
         self.chance_policy = chance_policy
         self.ordering_policy = ordering_policy
 
@@ -115,7 +116,7 @@ class MinimaxIterativeDeepeningAgent:
             self.chance_policy.start_search()
 
         depth = 1
-        while True:
+        while depth <= self.max_depth:
             try:
                 move = self.minimax_root(depth, deadline)
             except TimeoutError:

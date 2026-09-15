@@ -29,6 +29,7 @@ if __name__ == '__main__':
         game,
         heuristic=AzulNetExpectedHeuristic(),
         time_limit=5,
+        max_depth=50,
         chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
         ordering_policy=PointBasedPolicy(),
     )
