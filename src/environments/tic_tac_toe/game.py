@@ -30,6 +30,9 @@ class Game:
         if self.check_end():
             raise ValueError("Game has already ended. No more moves can be made.")
 
+        if isinstance(position, bool) or not isinstance(position, (int, str)):
+            raise ValueError("Invalid move. Position must be an integer.")
+
         try:
             position = int(position)
         except (ValueError, TypeError):
