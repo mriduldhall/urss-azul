@@ -1,12 +1,12 @@
 from random import Random
 from agents.human import HumanAgent
 from agents.random import RandomAgent
-from agents.minimax import MinimaxAgent
-from agents.mcts import MonteCarloTreeSearchAgent
-from agents.minimax_alpha_beta import MinimaxAlphaBetaAgent
-from agents.minimax_fixed_depth import MinimaxFixedDepthAgent
-from agents.minimax_alpha_beta_ordering import MinimaxAlphaBetaOrderingAgent
-from agents.minimax_iterative_deepening import MinimaxIterativeDeepeningAgent
+from agents.minimax.minimax import MinimaxAgent
+from agents.mcts.mcts import MonteCarloTreeSearchAgent
+from agents.minimax.minimax_alpha_beta import MinimaxAlphaBetaAgent
+from agents.minimax.minimax_fixed_depth import MinimaxFixedDepthAgent
+from agents.minimax.minimax_alpha_beta_ordering import MinimaxAlphaBetaOrderingAgent
+from agents.minimax.minimax_iterative_deepening import MinimaxIterativeDeepeningAgent
 from environments.azul.game import Game as AzulGame
 from environments.tic_tac_toe.game import Game as TicTacToeGame
 from interfaces.azul_console import AzulInputHandler
