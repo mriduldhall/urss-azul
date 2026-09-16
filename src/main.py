@@ -23,15 +23,12 @@ if __name__ == '__main__':
     player_one_seed = 123
     player_two_seed = 456
 
-    # game = AzulGame()
+    # game = TicTacToeGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MinimaxIterativeDeepeningAgent(
+    player_one_agent = MonteCarloTreeSearchAgent(
         game,
-        heuristic=AzulNetExpectedHeuristic(),
-        time_limit=5,
-        max_depth=50,
-        chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_one_seed)),
-        ordering_policy=PointBasedPolicy(),
+        simulations=1000,
+        rng=Random(player_one_seed),
     )
     player_two_agent = RandomAgent(
         game,

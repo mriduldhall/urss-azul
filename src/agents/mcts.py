@@ -49,7 +49,7 @@ class MonteCarloTreeSearchAgent:
     def select_child(self, current_node):
         best_uct = -float('inf')
         best_child = None
-        is_maximising = current_node.state.current_player == self.game.current_player
+        is_maximising = current_node.state.current_player.value == self.game.current_player.value
         for child in current_node.children:
             uct_value = child.calculate_uct(self.exploration_constant, is_maximising)
             if uct_value > best_uct:
