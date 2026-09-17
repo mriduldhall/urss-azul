@@ -107,5 +107,11 @@ class MonteCarloTreeSearchAgent:
             victory = self.run_simulation(node.state)
             self.backpropagate(node, victory)
 
-        best_child = max(self.root.children, key=lambda child: child.visits)
+        best_child = max(
+            self.root.children,
+            key=lambda child: (
+                child.visits,
+                child.reward / child.visits,
+            )
+        )
         return best_child.move
