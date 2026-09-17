@@ -3,6 +3,7 @@ from agents.human import HumanAgent
 from agents.random import RandomAgent
 from agents.minimax.minimax import MinimaxAgent
 from agents.mcts.mcts import MonteCarloTreeSearchAgent
+from agents.mcts.mcts_reuse import MonteCarloTreeSearchReuseAgent
 from agents.mcts.mcts_chance import MonteCarloTreeSearchChanceAgent
 from agents.mcts.mcts_rollout import MonteCarloTreeSearchRolloutAgent
 from agents.minimax.minimax_alpha_beta import MinimaxAlphaBetaAgent
@@ -29,7 +30,7 @@ if __name__ == '__main__':
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MonteCarloTreeSearchRolloutAgent(
+    player_one_agent = MonteCarloTreeSearchReuseAgent(
         game,
         simulations=1000,
         rng=Random(player_one_seed),
