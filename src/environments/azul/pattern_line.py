@@ -38,3 +38,8 @@ class PatternLine:
         clone.count = self.count
         clone.colour = self.colour
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, PatternLine):
+            return False
+        return self.size == other.size and self.count == other.count and self.colour == other.colour

@@ -56,3 +56,13 @@ class PlayerBoard:
         clone.wall = self.wall.clone()
         clone.floor = self.floor.clone()
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, PlayerBoard):
+            return False
+        return (self.value == other.value and
+                self.score == other.score and
+                self.bonus_score == other.bonus_score and
+                self.pattern_lines == other.pattern_lines and
+                self.wall == other.wall and
+                self.floor == other.floor)

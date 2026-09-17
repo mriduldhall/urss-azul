@@ -43,3 +43,8 @@ class Bag:
         clone.tiles = self.tiles.copy()
         clone.discard = self.discard.copy()
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Bag):
+            return False
+        return self.tiles == other.tiles and self.discard == other.discard

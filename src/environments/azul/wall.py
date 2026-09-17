@@ -104,3 +104,8 @@ class Wall:
         clone = Wall()
         clone.grid = [row[:] for row in self.grid]
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Wall):
+            return False
+        return self.grid == other.grid

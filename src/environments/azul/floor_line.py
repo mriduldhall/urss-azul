@@ -31,3 +31,8 @@ class FloorLine:
         clone = FloorLine()
         clone.tiles = self.tiles.copy()
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, FloorLine):
+            return False
+        return self.tiles == other.tiles

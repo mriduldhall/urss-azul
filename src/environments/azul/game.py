@@ -176,3 +176,14 @@ class Game:
 
     def display_game(self):
         return self.renderer.render()
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Game):
+            return False
+        return (self.bag == other.bag and
+                self.factories == other.factories and
+                self.centre == other.centre and
+                self.player_one == other.player_one and
+                self.player_two == other.player_two and
+                self.current_player == other.current_player and
+                self.refill_needed == other.refill_needed)

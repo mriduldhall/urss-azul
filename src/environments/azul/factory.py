@@ -29,3 +29,8 @@ class Factory:
         clone = Factory()
         clone.tiles = self.tiles.copy()
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Factory):
+            return False
+        return self.tiles == other.tiles

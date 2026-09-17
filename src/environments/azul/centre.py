@@ -40,3 +40,8 @@ class Centre:
         clone = Centre()
         clone.tiles = self.tiles.copy()
         return clone
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Centre):
+            return False
+        return self.tiles == other.tiles
