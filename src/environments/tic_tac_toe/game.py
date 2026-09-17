@@ -77,3 +77,8 @@ class Game:
                f"{self.board[3].value} | {self.board[4].value} | {self.board[5].value}\n" \
                f"---------\n" \
                f"{self.board[6].value} | {self.board[7].value} | {self.board[8].value}\n"
+
+    def __eq__(self, other: object):
+        if not isinstance(other, Game):
+            return False
+        return self.board == other.board and self.current_player == other.current_player
