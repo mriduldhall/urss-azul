@@ -47,6 +47,8 @@ class StateNode:
 #noinspection DuplicatedCode
 class MonteCarloTreeSearchChanceAgent:
     def __init__(self, game, simulations=1000, exploration_constant=sqrt(2), rng=None, chance_policy=None):
+        if simulations <= 0:
+            raise ValueError("Number of simulations must be greater than 0.")
         self.game = game
         self.rng = rng if rng is not None else Random()
         self.root = StateNode(self.game.clone(), None, None)
