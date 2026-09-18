@@ -21,6 +21,7 @@ from chance_policies.azul.mcts_single_sample import SingleSamplePolicy
 from order_policies.azul.net_score_gain import NetScoreGainPolicy
 from order_policies.azul.point_based import PointBasedPolicy
 from rollout_policies.azul.point_epsilon import PointEpsilonPolicy
+from rollout_policies.azul.floor_penalty_point_epsilon import FloorPenaltyPointEpsilonPolicy
 from runner import Runner
 
 if __name__ == '__main__':
@@ -35,7 +36,7 @@ if __name__ == '__main__':
         simulations=1000,
         rng=Random(player_one_seed),
         chance_policy=SingleSamplePolicy(rng=Random(player_one_seed)),
-        rollout_policy=PointEpsilonPolicy(epsilon=0.1)
+        rollout_policy=FloorPenaltyPointEpsilonPolicy(epsilon=0.1)
     )
     player_two_agent = MinimaxIterativeDeepeningAgent(
         game,
