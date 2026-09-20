@@ -8,35 +8,6 @@ class FloorPenaltyPointEpsilonPolicy:
             raise ValueError("Epsilon must be between 0 and 1.")
         self.epsilon = epsilon
 
-    # @staticmethod
-    # def score_column(game, move):
-    #     if move.destination_type == DestinationType.FLOOR_LINE:
-    #         return 0
-    #
-    #     column = game.current_player.wall.PATTERN[move.destination_index].index(move.tile)
-    #     if column == 0 or column == 4:
-    #         return 1
-    #     elif column == 1 or column == 3:
-    #         return 2
-    #     return 3
-    #
-    # @staticmethod
-    # def score_row_completion(game, move):
-    #     if move.destination_type == DestinationType.FLOOR_LINE:
-    #         return 0
-    #
-    #     if move.source_type == SourceType.FACTORY:
-    #         tiles_taken = game.factories[move.source_index].tiles.count(move.tile)
-    #     else:
-    #         tiles_taken = game.centre.tiles.count(move.tile)
-    #
-    #     existing_tiles = game.current_player.pattern_lines[move.destination_index].count
-    #     line_size = game.current_player.pattern_lines[move.destination_index].size
-    #
-    #     if existing_tiles + tiles_taken >= line_size:
-    #         return 3
-    #     return 0
-
     @staticmethod
     def check_row_completion(game, move):
         if move.destination_type == DestinationType.FLOOR_LINE:
@@ -93,7 +64,9 @@ class FloorPenaltyPointEpsilonPolicy:
 
     def score(self, game, move):
         score = 0
-        if self.check_row_completion(game, move):
+        if move.destination_type is DestinationType.FLOOR_LINE:
+            score += 0
+        elif self.check_row_completion(game, move):
             score += self.score_placement(game, move)
         else:
             score += 1
