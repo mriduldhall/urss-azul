@@ -22,7 +22,7 @@ from chance_policies.azul.mcts_single_sample import SingleSamplePolicy
 from order_policies.azul.net_score_gain import NetScoreGainPolicy
 from order_policies.azul.point_based import PointBasedPolicy
 from rollout_policies.azul.point_epsilon import PointEpsilonPolicy
-from rollout_policies.azul.floor_penalty_point_epsilon import FloorPenaltyPointEpsilonPolicy
+from rollout_policies.azul.score_estimate_epsilon import ScoreEstimateEpsilonPolicy
 from runner import Runner
 
 if __name__ == '__main__':
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         simulations=1000,
         rng=Random(player_one_seed),
         chance_policy=SingleSamplePolicy(rng=Random(player_one_seed)),
-        rollout_policy=FloorPenaltyPointEpsilonPolicy(epsilon=0.1),
+        rollout_policy=ScoreEstimateEpsilonPolicy(epsilon=0.1),
         k=1,
         alpha=0.5,
     )

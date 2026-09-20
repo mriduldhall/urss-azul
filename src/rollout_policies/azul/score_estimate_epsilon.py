@@ -2,7 +2,7 @@ from environments.azul.tiles import Tiles
 from environments.azul.azul_move import DestinationType, SourceType
 
 #noinspection DuplicatedCode
-class FloorPenaltyPointEpsilonPolicy:
+class ScoreEstimateEpsilonPolicy:
     def __init__(self, epsilon=0.1):
         if epsilon < 0 or epsilon > 1:
             raise ValueError("Epsilon must be between 0 and 1.")
