@@ -25,6 +25,7 @@ from order_policies.azul.point_based import PointBasedPolicy
 from rollout_policies.azul.point_epsilon import PointEpsilonPolicy
 from rollout_policies.azul.score_estimate_epsilon import ScoreEstimateEpsilonPolicy
 from expansion_policies.azul.point_based_random import PointBasedRandomExpansionPolicy
+from expansion_policies.azul.score_estimate_random import ScoreEstimateRandomExpansionPolicy
 from runner import Runner
 
 if __name__ == '__main__':
