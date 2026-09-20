@@ -6,6 +6,7 @@ from agents.mcts.mcts import MonteCarloTreeSearchAgent
 from agents.mcts.mcts_reuse import MonteCarloTreeSearchReuseAgent
 from agents.mcts.mcts_chance import MonteCarloTreeSearchChanceAgent
 from agents.mcts.mcts_rollout import MonteCarloTreeSearchRolloutAgent
+from agents.mcts.mcts_progressive_bias import MonteCarloTreeSearchProgressiveBiasAgent
 from agents.mcts.mcts_heuristic_expansion import MonteCarloTreeSearchHeuristicExpansionAgent
 from agents.mcts.mcts_progressive_widening import MonteCarloTreeSearchProgressiveWideningAgent
 from agents.minimax.minimax_alpha_beta import MinimaxAlphaBetaAgent
@@ -35,15 +36,17 @@ if __name__ == '__main__':
 
     # game = AzulGame()
     game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MonteCarloTreeSearchHeuristicExpansionAgent(
+    player_one_agent = MonteCarloTreeSearchProgressiveBiasAgent(
         game,
         simulations=1000,
         rng=Random(player_one_seed),
         chance_policy=SingleSamplePolicy(rng=Random(player_one_seed)),
         rollout_policy=ScoreEstimateEpsilonPolicy(epsilon=0.1),
         expansion_policy=PointBasedRandomExpansionPolicy(),
+        progressive_heuristic=AzulNetExpectedHeuristic(),
         k=1,
         alpha=0.5,
+        lambda_bias=1,
     )
     player_two_agent = MinimaxIterativeDeepeningAgent(
         game,
