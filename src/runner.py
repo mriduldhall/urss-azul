@@ -20,3 +20,4 @@ class Runner:
             print(f"Player {winner} wins!")
         else:
             print("It's a tie!")
+        return winner
