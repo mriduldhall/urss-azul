@@ -4,20 +4,27 @@ class Runner:
         self.player_one_agent = player_one_agent
         self.player_two_agent = player_two_agent
 
-    def run_game(self):
+    def run_game(self, display=True):
         end = self.game.check_end()
         while not end:
-            print(self.game.display_game())
+            if display:
+                print(self.game.display_game())
+
             if self.game.current_player == self.game.player_one:
                 move = self.player_one_agent.make_move()
             else:
                 move = self.player_two_agent.make_move()
             self.game.make_move(move)
             end = self.game.check_end()
-        print(self.game.display_game())
+
+        if display:
+            print(self.game.display_game())
+
         winner = self.game.check_victory()
-        if winner:
-            print(f"Player {winner} wins!")
-        else:
-            print("It's a tie!")
+        if display:
+            if winner:
+                print(f"Player {winner} wins!")
+            else:
+                print("It's a tie!")
+
         return winner
