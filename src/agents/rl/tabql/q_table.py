@@ -1,3 +1,5 @@
+import json
+
 class QTable:
     def __init__(self, action_count):
         self.q_table = {}
@@ -20,3 +22,7 @@ class QTable:
         old_value = self.q_table[state][action]
         self.q_table[state][action] = old_value + learning_rate * (target - old_value)
         return self.q_table[state][action]
+
+    def save(self, filename):
+        with open(filename, 'w') as file:
+            json.dump(self.q_table, file)
