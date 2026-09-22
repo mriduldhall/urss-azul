@@ -26,3 +26,12 @@ class QTable:
     def save(self, filename):
         with open(filename, 'w') as file:
             json.dump(self.q_table, file)
+
+    @staticmethod
+    def load(filename):
+        with open(filename, 'r') as file:
+            q_table = json.load(file)
+        action_count = len(next(iter(q_table.values())))
+        q_table_instance = QTable(action_count)
+        q_table_instance.q_table = q_table
+        return q_table_instance
