@@ -36,32 +36,24 @@ from agents.mcts.policies.rollout.score_estimate_epsilon import ScoreEstimateEps
 from agents.mcts.policies.expansion.point_based_random import PointBasedRandomExpansionPolicy
 from agents.mcts.policies.expansion.score_estimate_random import ScoreEstimateRandomExpansionPolicy
 
+from agents.rl.tabql.agent import TabqlAgent
+from agents.rl.tabql.state_encoders.tic_tac_toe import TicTacToeStateEncoder
+
 if __name__ == '__main__':
     game_seed = 42
     player_one_seed = 123
     player_two_seed = 456
 
-    # game = AzulGame()
-    game = AzulGame(rng=Random(game_seed))
-    player_one_agent = MonteCarloTreeSearchProgressiveBiasAgent(
+    game = TicTacToeGame()
+    # game = AzulGame(rng=Random(game_seed))
+    player_one_agent = TabqlAgent(
         game,
-        simulations=1000,
-        rng=Random(player_one_seed),
-        chance_policy=SingleSamplePolicy(rng=Random(player_one_seed)),
-        rollout_policy=ScoreEstimateEpsilonPolicy(epsilon=0.1),
-        expansion_policy=PointBasedRandomExpansionPolicy(),
-        progressive_heuristic=AzulNetExpectedHeuristic(),
-        k=1,
-        alpha=0.5,
-        lambda_bias=1,
+        filename="q_table",
+        state_encoder=TicTacToeStateEncoder(),
+        # rng=Random(player_one_seed),
     )
-    player_two_agent = MinimaxIterativeDeepeningAgent(
+    player_two_agent = MinimaxAgent(
         game,
-        heuristic=AzulNetExpectedHeuristic(),
-        time_limit=5,
-        max_depth=10,
-        chance_policy=SampleRefillsPolicy(samples=5, rng=Random(player_two_seed)),
-        ordering_policy=PointBasedPolicy(),
     )
     runner = Runner(game, player_one_agent, player_two_agent)
     runner.run_game()
