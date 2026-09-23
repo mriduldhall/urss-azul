@@ -25,7 +25,7 @@ class TabQLTrainer:
         self.discount_factor = discount_factor
         self.rng = rng if rng is not None else Random()
 
-    def run_episode(self, learner_starts=True):
+    def run_episode(self, episode_number, learner_starts=True):
         game = self.game_constructor()
         opponent_agent = self.opponent_agent_constructor(game)
         is_learner_turn = learner_starts
@@ -33,7 +33,7 @@ class TabQLTrainer:
         while not game.check_end():
             if is_learner_turn:
                 state = self.state_encoder.encode(game)
-                move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng)
+                move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
 
                 acting_player = game.current_player
                 game.make_move(move)
@@ -56,7 +56,7 @@ class TabQLTrainer:
     def run_training(self):
         is_learner_starts = True
         for episode in range(self.episodes):
-            self.run_episode(learner_starts=is_learner_starts)
+            self.run_episode(episode, learner_starts=is_learner_starts)
             is_learner_starts = not is_learner_starts
 
         return self.q_table

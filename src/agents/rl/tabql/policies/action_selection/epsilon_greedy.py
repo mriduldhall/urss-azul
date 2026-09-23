@@ -4,7 +4,7 @@ class EpsilonGreedyActionSelection:
             raise ValueError("Epsilon must be between 0 and 1.")
         self.epsilon = epsilon
 
-    def choose_action(self, state, q_table, valid_moves, rng):
+    def choose_action(self, state, q_table, valid_moves, rng, training_progress):
         if rng.random() < self.epsilon:
             return rng.choice(valid_moves)
 
