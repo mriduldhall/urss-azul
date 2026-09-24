@@ -14,6 +14,7 @@ class Trainer:
 
         trainer = TabQLTrainer(
             game_constructor,
+            False,
             opponent_constructor,
             QTable(action_count=9),
             TicTacToeStateEncoder(),

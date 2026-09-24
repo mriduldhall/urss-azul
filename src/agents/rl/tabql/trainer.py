@@ -4,6 +4,7 @@ class TabQLTrainer:
     def __init__(
             self,
             game_constructor,
+            self_play,
             opponent_agent_constructor,
             q_table,
             state_encoder,
@@ -15,6 +16,7 @@ class TabQLTrainer:
             rng=None
     ):
         self.game_constructor = game_constructor
+        self.self_play = self_play
         self.opponent_agent_constructor = opponent_agent_constructor
         self.q_table = q_table
         self.state_encoder = state_encoder
@@ -24,14 +26,19 @@ class TabQLTrainer:
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.rng = rng if rng is not None else Random()
+        if self_play and opponent_agent_constructor is not None:
+            raise ValueError("If self_play is True, opponent_agent_constructor must be None.")
+        if not self_play and opponent_agent_constructor is None:
+            raise ValueError("If self_play is False, opponent_agent_constructor must be provided.")
 
     def run_episode(self, episode_number, learner_starts=True):
         game = self.game_constructor()
-        opponent_agent = self.opponent_agent_constructor(game)
+        if not self.self_play:
+            opponent_agent = self.opponent_agent_constructor(game)
         is_learner_turn = learner_starts
 
         while not game.check_end():
-            if is_learner_turn:
+            if is_learner_turn or self.self_play:
                 state = self.state_encoder.encode(game)
                 move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
 
