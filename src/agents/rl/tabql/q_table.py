@@ -23,6 +23,18 @@ class QTable:
         self.q_table[state][action] = old_value + learning_rate * (target - old_value)
         return self.q_table[state][action]
 
+    def to_data(self):
+        return {
+            "action_count": self.action_count,
+            "q_table": self.q_table,
+        }
+
+    @staticmethod
+    def from_data(data):
+        q_table_instance = QTable(data["action_count"])
+        q_table_instance.q_table = data["q_table"]
+        return q_table_instance
+
     def save(self, filename):
         with open(filename, 'w') as file:
             json.dump(self.q_table, file)
