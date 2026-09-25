@@ -20,9 +20,8 @@ class Trainer:
             TicTacToeStateEncoder(),
             SoftmaxActionSelection(5, 0.9999),
             OutcomeReward(),
-            episodes=100000,
             learning_rate=0.1,
             discount_factor=0.9,
         )
-        q_table = trainer.run_training()
+        q_table = trainer.run_training(100000)
         return q_table

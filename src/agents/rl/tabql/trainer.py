@@ -11,7 +11,6 @@ class TabQLTrainer:
             state_encoder,
             action_selection_policy,
             reward_policy,
-            episodes,
             learning_rate=0.1,
             discount_factor=0.9,
             rng=None
@@ -23,10 +22,11 @@ class TabQLTrainer:
         self.state_encoder = state_encoder
         self.action_selection_policy = action_selection_policy
         self.reward_policy = reward_policy
-        self.episodes = episodes
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.rng = rng if rng is not None else Random()
+        self.completed_episodes = 0
+        self.next_learner_starts = True
         if self_play and opponent_agent_constructor is not None:
             raise ValueError("If self_play is True, opponent_agent_constructor must be None.")
         if not self_play and opponent_agent_constructor is None:
@@ -79,13 +79,16 @@ class TabQLTrainer:
 
             self.q_table.update(state, move, target, self.learning_rate)
 
-    def run_training(self):
-        is_learner_starts = True
-        for episode in range(self.episodes):
+    def run_training(self, episodes):
+        for episode in range(episodes):
+            current_episode = self.completed_episodes
+
             if self.self_play:
-                self.run_self_play_episode(episode)
+                self.run_self_play_episode(current_episode)
             else:
-                self.run_episode(episode, learner_starts=is_learner_starts)
-            is_learner_starts = not is_learner_starts
+                self.run_episode(current_episode, learner_starts=self.next_learner_starts)
+
+            self.next_learner_starts = not self.next_learner_starts
+            self.completed_episodes += 1
 
         return self.q_table
