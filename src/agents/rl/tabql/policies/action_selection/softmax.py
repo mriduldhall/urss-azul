@@ -17,3 +17,10 @@ class SoftmaxActionSelection:
         probabilities = [exp_q_value / sum_exp_q_values for exp_q_value in exp_q_values]
 
         return rng.choices(valid_moves, weights=probabilities)[0]
+
+    def get_config(self):
+        return {
+            "name": "softmax",
+            "starting_temperature": self.starting_temperature,
+            "decay_rate": self.decay_rate,
+        }

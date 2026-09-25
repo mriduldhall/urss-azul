@@ -78,6 +78,10 @@ class Game:
                f"---------\n" \
                f"{self.board[6].value} | {self.board[7].value} | {self.board[8].value}\n"
 
+    @staticmethod
+    def get_config():
+        return "tic_tac_toe"
+
     def __eq__(self, other: object):
         if not isinstance(other, Game):
             return False

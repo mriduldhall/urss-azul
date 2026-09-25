@@ -10,3 +10,7 @@ class OutcomeReward:
         elif victor == acting_player.value:
             return 1
         return -1
+
+    @staticmethod
+    def get_config():
+        return "terminal-outcome"

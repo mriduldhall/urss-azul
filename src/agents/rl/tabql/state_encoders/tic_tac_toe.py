@@ -12,3 +12,7 @@ class TicTacToeStateEncoder:
             else:
                 encoded_state += "-1"
         return encoded_state
+
+    @staticmethod
+    def get_config():
+        return "tic_tac_toe-relative-current-player"

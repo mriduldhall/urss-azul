@@ -12,3 +12,9 @@ class EpsilonGreedyActionSelection:
         max_q_value = max(q_values[action] for action in valid_moves)
         best_actions = [action for action in valid_moves if q_values[action] == max_q_value]
         return rng.choice(best_actions)
+
+    def get_config(self):
+        return {
+            "name": "epsilon-greedy",
+            "epsilon": self.epsilon,
+        }

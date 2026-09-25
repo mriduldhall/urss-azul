@@ -177,6 +177,10 @@ class Game:
     def display_game(self):
         return self.renderer.render()
 
+    @staticmethod
+    def get_config():
+        return "azul"
+
     def __eq__(self, other: object):
         if not isinstance(other, Game):
             return False
