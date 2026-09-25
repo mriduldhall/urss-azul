@@ -1,5 +1,6 @@
 from random import Random
 
+#noinspection DuplicatedCode
 class TabQLTrainer:
     def __init__(
             self,
@@ -31,14 +32,22 @@ class TabQLTrainer:
         if not self_play and opponent_agent_constructor is None:
             raise ValueError("If self_play is False, opponent_agent_constructor must be provided.")
 
+    def find_target(self, game, reward):
+        if game.check_end():
+            return reward
+
+        next_state = self.state_encoder.encode(game)
+        next_best_q_value = max(
+            self.q_table.get_value(next_state, action) for action in game.get_legal_actions())
+        return reward - (self.discount_factor * next_best_q_value)
+
     def run_episode(self, episode_number, learner_starts=True):
         game = self.game_constructor()
-        if not self.self_play:
-            opponent_agent = self.opponent_agent_constructor(game)
+        opponent_agent = self.opponent_agent_constructor(game)
         is_learner_turn = learner_starts
 
         while not game.check_end():
-            if is_learner_turn or self.self_play:
+            if is_learner_turn:
                 state = self.state_encoder.encode(game)
                 move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
 
@@ -46,12 +55,7 @@ class TabQLTrainer:
                 game.make_move(move)
                 reward = self.reward_policy.get_reward(game, acting_player)
 
-                if game.check_end():
-                    target = reward
-                else:
-                    next_state = self.state_encoder.encode(game)
-                    next_best_q_value = max(self.q_table.get_value(next_state, action) for action in game.get_legal_actions())
-                    target = reward - (self.discount_factor * next_best_q_value)
+                target = self.find_target(game, reward)
 
                 self.q_table.update(state, move, target, self.learning_rate)
             else:
@@ -60,10 +64,28 @@ class TabQLTrainer:
 
             is_learner_turn = not is_learner_turn
 
+    def run_self_play_episode(self, episode_number):
+        game = self.game_constructor()
+
+        while not game.check_end():
+            state = self.state_encoder.encode(game)
+            move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
+
+            acting_player = game.current_player
+            game.make_move(move)
+            reward = self.reward_policy.get_reward(game, acting_player)
+
+            target = self.find_target(game, reward)
+
+            self.q_table.update(state, move, target, self.learning_rate)
+
     def run_training(self):
         is_learner_starts = True
         for episode in range(self.episodes):
-            self.run_episode(episode, learner_starts=is_learner_starts)
+            if self.self_play:
+                self.run_self_play_episode(episode)
+            else:
+                self.run_episode(episode, learner_starts=is_learner_starts)
             is_learner_starts = not is_learner_starts
 
         return self.q_table
