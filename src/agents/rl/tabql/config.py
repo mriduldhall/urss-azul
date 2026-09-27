@@ -9,3 +9,16 @@ class TabQLConfig:
         self.self_play = self_play
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
+
+    def to_data(self):
+        return {
+            "environment": self.environment,
+            "opponent_agent": self.opponent_agent,
+            "state_encoder": self.state_encoder,
+            "action_encoder": self.action_encoder,
+            "reward_policy": self.reward_policy,
+            "exploration_policy": self.exploration_policy,
+            "self_play": self.self_play,
+            "learning_rate": self.learning_rate,
+            "discount_factor": self.discount_factor,
+        }

@@ -1,4 +1,5 @@
 from random import Random
+from agents.rl.tabql.checkpoint import TabQLCheckpoint
 
 #noinspection DuplicatedCode
 class TabQLTrainer:
@@ -91,3 +92,12 @@ class TabQLTrainer:
             self.completed_episodes += 1
 
         return self.q_table
+
+    def create_checkpoint(self):
+        return TabQLCheckpoint(
+            config=self.config.to_data(),
+            completed_episodes=self.completed_episodes,
+            next_learner_starts=self.next_learner_starts,
+            rng_state=self.rng.getstate(),
+            q_table=self.q_table.to_data()
+        )
