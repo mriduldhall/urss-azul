@@ -22,3 +22,17 @@ class TabQLConfig:
             "learning_rate": self.learning_rate,
             "discount_factor": self.discount_factor,
         }
+
+    @staticmethod
+    def from_data(data):
+        return TabQLConfig(
+            environment=data["environment"],
+            opponent_agent=data["opponent_agent"],
+            state_encoder=data["state_encoder"],
+            action_encoder=data["action_encoder"],
+            reward_policy=data["reward_policy"],
+            exploration_policy=data["exploration_policy"],
+            self_play=data["self_play"],
+            learning_rate=data["learning_rate"],
+            discount_factor=data["discount_factor"],
+        )

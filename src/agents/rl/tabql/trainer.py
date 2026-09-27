@@ -1,4 +1,6 @@
 from random import Random
+
+from agents.rl.tabql.q_table import QTable
 from agents.rl.tabql.checkpoint import TabQLCheckpoint
 
 #noinspection DuplicatedCode
@@ -101,3 +103,12 @@ class TabQLTrainer:
             rng_state=self.rng.getstate(),
             q_table=self.q_table.to_data()
         )
+
+    def restore(self, checkpoint):
+        if checkpoint.config != self.config.to_data():
+            raise ValueError("Config does not match.")
+
+        self.completed_episodes = checkpoint.completed_episodes
+        self.next_learner_starts = checkpoint.next_learner_starts
+        self.rng.setstate(checkpoint.rng_state)
+        self.q_table = QTable.from_data(checkpoint.q_table)
