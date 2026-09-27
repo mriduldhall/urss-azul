@@ -5,3 +5,10 @@ class HumanAgent:
     def make_move(self):
         move = self.input_handler.get_move()
         return move
+
+    @staticmethod
+    def get_config():
+        return {
+            "name": "human_agent",
+            "parameters": {}
+        }

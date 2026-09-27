@@ -7,3 +7,10 @@ class RandomAgent:
 
     def make_move(self):
         return self.rng.choice(self.game.get_legal_actions())
+
+    @staticmethod
+    def get_config():
+        return {
+            "name": "random_agent",
+            "parameters": {}
+        }
