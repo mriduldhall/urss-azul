@@ -10,7 +10,7 @@ from agents.rl.tabql.config import TabQLConfig
 
 class Trainer:
     @staticmethod
-    def train(opponent_constructor):
+    def create(opponent_constructor):
         game_constructor = TicTacToeGame
         state_encoder = TicTacToeStateEncoder()
         action_encoder = None
@@ -32,7 +32,7 @@ class Trainer:
             discount_factor=discount_factor,
         )
 
-        trainer = TabQLTrainer(
+        return TabQLTrainer(
             config,
             game_constructor,
             opponent_constructor,
@@ -41,5 +41,3 @@ class Trainer:
             SoftmaxActionSelection(5, 0.9999),
             OutcomeReward(),
         )
-        q_table = trainer.run_training(100000)
-        return q_table
