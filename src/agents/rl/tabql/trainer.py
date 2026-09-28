@@ -105,7 +105,7 @@ class TabQLTrainer:
         )
 
     def restore(self, checkpoint):
-        if checkpoint.config != self.config.to_data():
+        if checkpoint.config.to_data() != self.config.to_data():
             raise ValueError("Config does not match.")
 
         self.completed_episodes = checkpoint.completed_episodes
