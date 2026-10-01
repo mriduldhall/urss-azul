@@ -7,11 +7,9 @@ class AzulStateEncoder:
         encoded_state += "||"
         encoded_state += self.encode_centre(game.centre)
         encoded_state += "||"
-        current_player_board = game.current_player
-        other_player = game.player_one if game.current_player is game.player_two else game.player_two
-        encoded_state += self.encode_board(current_player_board)
+        encoded_state += self.encode_board(game.current_player)
         encoded_state += "||"
-        encoded_state += self.encode_board(other_player)
+        encoded_state += self.encode_board(game.player_one if game.current_player is game.player_two else game.player_two)
         return encoded_state
 
     @staticmethod
