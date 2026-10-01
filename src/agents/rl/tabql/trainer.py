@@ -34,13 +34,16 @@ class TabQLTrainer:
         if not self.self_play and opponent_agent_constructor is None:
             raise ValueError("If self_play is False, opponent_agent_constructor must be provided.")
 
-    def find_target(self, game, reward):
+    def find_target(self, game, reward, same_player):
         if game.check_end():
             return reward
 
         next_state = self.state_encoder.encode(game)
         next_best_q_value = max(
             self.q_table.get_value(next_state, action) for action in game.get_legal_actions())
+
+        if same_player:
+            return reward + (self.discount_factor * next_best_q_value)
         return reward - (self.discount_factor * next_best_q_value)
 
     def run_episode(self, episode_number, learner_starts=True):
@@ -57,14 +60,18 @@ class TabQLTrainer:
                 game.make_move(move)
                 reward = self.reward_policy.get_reward(game, acting_player)
 
-                target = self.find_target(game, reward)
+                same_player = game.current_player.value == acting_player.value
+                target = self.find_target(game, reward, same_player)
 
                 self.q_table.update(state, move, target, self.learning_rate)
             else:
+                acting_player = game.current_player
                 move = opponent_agent.make_move()
                 game.make_move(move)
+                same_player = game.current_player.value == acting_player.value
 
-            is_learner_turn = not is_learner_turn
+            if not same_player:
+                is_learner_turn = not is_learner_turn
 
     def run_self_play_episode(self, episode_number):
         game = self.game_constructor()
@@ -77,7 +84,8 @@ class TabQLTrainer:
             game.make_move(move)
             reward = self.reward_policy.get_reward(game, acting_player)
 
-            target = self.find_target(game, reward)
+            same_player = game.current_player.value == acting_player.value
+            target = self.find_target(game, reward, same_player)
 
             self.q_table.update(state, move, target, self.learning_rate)
 
