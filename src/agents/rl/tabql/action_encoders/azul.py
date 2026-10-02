@@ -8,3 +8,7 @@ class AzulActionEncoder:
         encoded_action += str(move.destination_type.value)
         encoded_action += str(move.destination_index)
         return encoded_action
+
+    @staticmethod
+    def get_config():
+        return "azul-action-encoder"

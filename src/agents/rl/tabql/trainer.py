@@ -119,4 +119,4 @@ class TabQLTrainer:
         self.completed_episodes = checkpoint.completed_episodes
         self.next_learner_starts = checkpoint.next_learner_starts
         self.rng.setstate(checkpoint.rng_state)
-        self.q_table = QTable.from_data(checkpoint.q_table)
+        self.q_table = QTable.from_data(checkpoint.q_table, self.q_table.action_mapping)
