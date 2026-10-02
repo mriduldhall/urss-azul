@@ -38,6 +38,7 @@ from agents.mcts.policies.expansion.score_estimate_random import ScoreEstimateRa
 
 from agents.rl.tabql.agent import TabqlAgent
 from agents.rl.tabql.state_encoders.tic_tac_toe import TicTacToeStateEncoder
+from agents.rl.tabql.action_mapping.tic_tac_toe import TicTacToeActionMapping
 
 if __name__ == '__main__':
     game_seed = 42
@@ -48,8 +49,9 @@ if __name__ == '__main__':
     # game = AzulGame(rng=Random(game_seed))
     player_one_agent = TabqlAgent(
         game,
-        filename="q_table",
+        filename="q_table.json",
         state_encoder=TicTacToeStateEncoder(),
+        action_mapping=TicTacToeActionMapping(),
         # rng=Random(player_one_seed),
     )
     player_two_agent = MinimaxAgent(

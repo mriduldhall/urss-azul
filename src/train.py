@@ -1,6 +1,6 @@
 from pathlib import Path
 from agents.random import RandomAgent
-from training.train_tabql_self_play_tic_tac_toe import Trainer as TicTacToeTabqlTrainer
+from training.train_tabql_tic_tac_toe import Trainer as TicTacToeTabqlTrainer
 from agents.rl.tabql.checkpoint_store import TabQLCheckpointStore
 
 if __name__ == '__main__':
@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     opponent_constructor = lambda game: RandomAgent(game)
 
-    trainer = TicTacToeTabqlTrainer.create()
+    trainer = TicTacToeTabqlTrainer.create(opponent_constructor)
 
     if checkpoint_path.exists():
         checkpoint = TabQLCheckpointStore().load(checkpoint_path)

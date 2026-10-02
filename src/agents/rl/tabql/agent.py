@@ -2,9 +2,9 @@ from random import Random
 from agents.rl.tabql.q_table import QTable
 
 class TabqlAgent:
-    def __init__(self, game, filename, state_encoder, rng=None):
+    def __init__(self, game, filename, state_encoder, action_mapping, rng=None):
         self.game = game
-        self.q_table = QTable.load(filename)
+        self.q_table = QTable.load(filename, action_mapping)
         self.state_encoder = state_encoder
         self.rng = rng if rng is not None else Random()
 

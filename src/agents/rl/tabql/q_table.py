@@ -58,5 +58,5 @@ class QTable:
 
         q_table_instance = QTable(action_count, action_mapping)
         q_table_instance.q_table = data["q_table"]
-        
+
         return q_table_instance
