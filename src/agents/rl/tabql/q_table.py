@@ -42,13 +42,21 @@ class QTable:
 
     def save(self, filename):
         with open(filename, 'w') as file:
-            json.dump(self.q_table, file)
+            json.dump(self.to_data(), file)
 
     @staticmethod
-    def load(filename):
+    def load(filename, action_mapping):
         with open(filename, 'r') as file:
-            q_table = json.load(file)
-        action_count = len(next(iter(q_table.values())))
-        q_table_instance = QTable(action_count, None)
-        q_table_instance.q_table = q_table
+            data = json.load(file)
+
+        action_count = data["action_count"]
+        if action_count != len(next(iter(data["q_table"].values()))):
+            raise ValueError("Action count does not match.")
+
+        if data["action_mapping"] != action_mapping.get_config():
+            raise ValueError("Action mapping configuration does not match.")
+
+        q_table_instance = QTable(action_count, action_mapping)
+        q_table_instance.q_table = data["q_table"]
+        
         return q_table_instance

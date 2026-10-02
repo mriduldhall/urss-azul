@@ -38,7 +38,6 @@ class Trainer:
             config,
             game_constructor,
             opponent_constructor,
-            action_mapping,
             QTable(action_count=9, action_mapping=action_mapping),
             state_encoder,
             exploration_policy,
