@@ -1,15 +1,15 @@
 from pathlib import Path
 from agents.random import RandomAgent
-from training.train_tabql_azul import Trainer as AzulTabqlTrainer
+from training.train_tabql_self_play_azul import Trainer as AzulTabqlTrainer
 from agents.rl.tabql.checkpoint_store import TabQLCheckpointStore
 
 if __name__ == '__main__':
     checkpoint_path = Path("checkpoint.json")
     q_table_path = Path("q_table.json")
 
-    opponent_constructor = lambda game: RandomAgent(game)
+    # opponent_constructor = lambda game: RandomAgent(game)
 
-    trainer = AzulTabqlTrainer.create(opponent_constructor)
+    trainer = AzulTabqlTrainer.create()
 
     if checkpoint_path.exists():
         checkpoint = TabQLCheckpointStore().load(checkpoint_path)
