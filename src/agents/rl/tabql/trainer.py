@@ -12,6 +12,7 @@ class TabQLTrainer:
             opponent_agent_constructor,
             q_table,
             state_encoder,
+            action_mapping,
             action_selection_policy,
             reward_policy,
             rng=None
@@ -21,6 +22,7 @@ class TabQLTrainer:
         self.opponent_agent_constructor = opponent_agent_constructor
         self.q_table = q_table
         self.state_encoder = state_encoder
+        self.action_mapping = action_mapping
         self.action_selection_policy = action_selection_policy
         self.reward_policy = reward_policy
         self.self_play = config.self_play
@@ -54,7 +56,7 @@ class TabQLTrainer:
         while not game.check_end():
             if is_learner_turn:
                 state = self.state_encoder.encode(game)
-                move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
+                move = self.action_selection_policy.choose_action(state, self.q_table, self.action_mapping, game.get_legal_actions(), self.rng, episode_number)
 
                 acting_player = game.current_player
                 game.make_move(move)
@@ -78,7 +80,7 @@ class TabQLTrainer:
 
         while not game.check_end():
             state = self.state_encoder.encode(game)
-            move = self.action_selection_policy.choose_action(state, self.q_table, game.get_legal_actions(), self.rng, episode_number)
+            move = self.action_selection_policy.choose_action(state, self.q_table, self.action_mapping, game.get_legal_actions(), self.rng, episode_number)
 
             acting_player = game.current_player
             game.make_move(move)

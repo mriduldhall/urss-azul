@@ -4,13 +4,13 @@ class EpsilonGreedyActionSelection:
             raise ValueError("Epsilon must be between 0 and 1.")
         self.epsilon = epsilon
 
-    def choose_action(self, state, q_table, valid_moves, rng, training_progress):
+    def choose_action(self, state, q_table, action_mapping, valid_moves, rng, training_progress):
         if rng.random() < self.epsilon:
             return rng.choice(valid_moves)
 
         q_values = q_table.get_values(state)
-        max_q_value = max(q_values[action] for action in valid_moves)
-        best_actions = [action for action in valid_moves if q_values[action] == max_q_value]
+        max_q_value = max(q_values[action_mapping.get_mapping(action)] for action in valid_moves)
+        best_actions = [action for action in valid_moves if q_values[action_mapping.get_mapping(action)] == max_q_value]
         return rng.choice(best_actions)
 
     def get_config(self):
