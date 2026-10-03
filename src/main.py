@@ -37,6 +37,8 @@ from agents.mcts.policies.expansion.point_based_random import PointBasedRandomEx
 from agents.mcts.policies.expansion.score_estimate_random import ScoreEstimateRandomExpansionPolicy
 
 from agents.rl.tabql.agent import TabqlAgent
+from agents.rl.tabql.state_encoders.azul import AzulStateEncoder
+from agents.rl.tabql.action_mapping.azul import AzulActionMapping
 from agents.rl.tabql.state_encoders.tic_tac_toe import TicTacToeStateEncoder
 from agents.rl.tabql.action_mapping.tic_tac_toe import TicTacToeActionMapping
 
@@ -45,16 +47,16 @@ if __name__ == '__main__':
     player_one_seed = 123
     player_two_seed = 456
 
-    game = TicTacToeGame()
-    # game = AzulGame(rng=Random(game_seed))
+    # game = TicTacToeGame()
+    game = AzulGame(rng=Random(game_seed))
     player_one_agent = TabqlAgent(
         game,
         filename="q_table.json",
-        state_encoder=TicTacToeStateEncoder(),
-        action_mapping=TicTacToeActionMapping(),
+        state_encoder=AzulStateEncoder(),
+        action_mapping=AzulActionMapping(),
         # rng=Random(player_one_seed),
     )
-    player_two_agent = MinimaxAgent(
+    player_two_agent = RandomAgent(
         game,
     )
     runner = Runner(game, player_one_agent, player_two_agent)
