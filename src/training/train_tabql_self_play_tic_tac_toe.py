@@ -15,7 +15,6 @@ class Trainer:
         game_constructor = TicTacToeGame
         opponent_constructor = None
         state_encoder = TicTacToeStateEncoder()
-        action_encoder = None
         action_mapping = TicTacToeActionMapping()
         reward_policy = OutcomeReward()
         exploration_policy = EpsilonGreedyActionSelection(epsilon=0.1)
@@ -27,7 +26,6 @@ class Trainer:
             environment=game_constructor().get_config(),
             opponent_agent=opponent_constructor(game_constructor()).get_config() if not self_play else None,
             state_encoder=state_encoder.get_config(),
-            action_encoder=action_encoder.get_config() if action_encoder else None,
             action_mapping=action_mapping.get_config(),
             reward_policy=reward_policy.get_config(),
             exploration_policy=exploration_policy.get_config(),
@@ -42,6 +40,7 @@ class Trainer:
             opponent_constructor,
             QTable(action_count=9, action_mapping=action_mapping),
             state_encoder,
+            action_mapping,
             SoftmaxActionSelection(5, 0.9999),
             OutcomeReward(),
         )

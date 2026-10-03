@@ -4,7 +4,6 @@ from agents.rl.tabql.trainer import TabQLTrainer
 from agents.rl.tabql.q_table import QTable
 from agents.rl.tabql.state_encoders.azul import AzulStateEncoder
 from agents.rl.tabql.policies.action_selection.epsilon_greedy import EpsilonGreedyActionSelection
-from agents.rl.tabql.action_encoders.azul import AzulActionEncoder
 from agents.rl.tabql.action_mapping.azul import AzulActionMapping
 from agents.rl.tabql.policies.rewards.outcome import OutcomeReward
 from agents.rl.tabql.config import TabQLConfig
@@ -14,7 +13,6 @@ class Trainer:
     def create(opponent_constructor):
         game_constructor = AzulGame
         state_encoder = AzulStateEncoder()
-        action_encoder = AzulActionEncoder()
         action_mapping = AzulActionMapping()
         reward_policy = OutcomeReward()
         exploration_policy = EpsilonGreedyActionSelection(0.1)
@@ -26,7 +24,6 @@ class Trainer:
             environment=game_constructor().get_config(),
             opponent_agent=opponent_constructor(game_constructor()).get_config() if not self_play else None,
             state_encoder=state_encoder.get_config(),
-            action_encoder=action_encoder.get_config() if action_encoder else None,
             action_mapping=action_mapping.get_config(),
             reward_policy=reward_policy.get_config(),
             exploration_policy=exploration_policy.get_config(),

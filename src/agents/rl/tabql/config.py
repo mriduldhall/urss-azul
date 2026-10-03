@@ -1,9 +1,8 @@
 class TabQLConfig:
-    def __init__(self, environment, opponent_agent, state_encoder, action_encoder, action_mapping, reward_policy, exploration_policy, self_play, learning_rate, discount_factor):
+    def __init__(self, environment, opponent_agent, state_encoder, action_mapping, reward_policy, exploration_policy, self_play, learning_rate, discount_factor):
         self.environment = environment
         self.opponent_agent = opponent_agent
         self.state_encoder = state_encoder
-        self.action_encoder = action_encoder
         self.action_mapping = action_mapping
         self.reward_policy = reward_policy
         self.exploration_policy = exploration_policy
@@ -16,7 +15,6 @@ class TabQLConfig:
             "environment": self.environment,
             "opponent_agent": self.opponent_agent,
             "state_encoder": self.state_encoder,
-            "action_encoder": self.action_encoder,
             "action_mapping": self.action_mapping,
             "reward_policy": self.reward_policy,
             "exploration_policy": self.exploration_policy,
@@ -31,7 +29,6 @@ class TabQLConfig:
             environment=data["environment"],
             opponent_agent=data["opponent_agent"],
             state_encoder=data["state_encoder"],
-            action_encoder=data["action_encoder"],
             action_mapping=data["action_mapping"],
             reward_policy=data["reward_policy"],
             exploration_policy=data["exploration_policy"],
