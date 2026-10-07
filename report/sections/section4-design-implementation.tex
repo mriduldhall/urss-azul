@@ -98,3 +98,8 @@ The two environments expose a common set of operations so that agents can intera
 \caption{Game environment attributes and methods used by the agents}
 \label{tab:game-environment-interface}\\
 \end{longtable}
+
+
+\subsection{Minimax}
+
+Minimax is a search-based agent that works by searching all possible game states. At the start of each decision, the player choosing a move is treated as Max and the opponent as Min. From the current game state, the agent explores each legal move and its possible successor states until the game ends. A Max win receives a favourable value, a draw receives zero, and a Min win receives an unfavourable value. These values are passed back through the tree: Max selects the highest value among its children, while Min selects the lowest. The agent then returns the move with the highest value from the current state. With tic-tac-toe, Minimax can run from the empty board in 1.16 seconds. Computing the entire game tree with Azul is estimated to take thousands of years which is why it is necessary to make changes to the pure Minimax algorithm to support Azul.
