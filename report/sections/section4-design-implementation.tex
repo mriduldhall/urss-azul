@@ -124,3 +124,15 @@ The random refills require a separate decision about how the search should conti
 \end{figure}
 
 Although the net score does not improve with the increase in number of samples, this is highly likely due to the search depth being 2. Using the sampled refills policy with 5 samples appears to provide a good trade-of between time and the ability to reason about the outcomes of a random refill. Running fixed-depth Minimax at a max depth of 3, with 5 sampled refills results in an average net score of 54.2 and an average full-game runtime of 78.09 seconds.
+
+\subsubsection{Alpha-beta Pruning}
+Although fixed-depth Minimax made it possible to use Minimax in Azul, searching at a greater depth remains costly since each position can have many legal moves. Alpha-beta pruning reduces the number of branches examined before making a decision. It keeps track of two bounds while searching: alpha is the highest value Max has found so far along the current path, and beta is the lowest value Min has found. These bounds are constantly updated as the tree is explored.\\
+
+When alpha becomes greater than or equal to beta, the remaining moves at that node cannot affect the decision higher in the tree, and are hence skipped. The agent still searches to the same depth and uses the same heuristic and chance policy. The aim of this change is to reduce search work rather than change how a position is valued. At a depth of 3, Minimax with Alpha-beta pruning computes a single move in approximately 0.554 seconds compared to 37.6 seconds taken without pruning.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/alpha-beta-minimax-single-move.png}
+    \caption{Minimax decision time with Alpha-beta pruning at different search depths in Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
