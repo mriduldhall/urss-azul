@@ -103,3 +103,24 @@ The two environments expose a common set of operations so that agents can intera
 \subsection{Minimax}
 
 Minimax is a search-based agent that works by searching all possible game states. At the start of each decision, the player choosing a move is treated as Max and the opponent as Min. From the current game state, the agent explores each legal move and its possible successor states until the game ends. A Max win receives a favourable value, a draw receives zero, and a Min win receives an unfavourable value. These values are passed back through the tree: Max selects the highest value among its children, while Min selects the lowest. The agent then returns the move with the highest value from the current state. With tic-tac-toe, Minimax can run from the empty board in 1.16 seconds. Computing the entire game tree with Azul is estimated to take thousands of years which is why it is necessary to make changes to the pure Minimax algorithm to support Azul.
+
+\subsubsection{Azul Compatibility (Fixed Depth Search and Chance Handling)}
+As discussed in Section 4.1, Azul presents two difficulties for the full-depth Minimax agent used in tic-tac-toe: it can offer many more legal moves, and its factory refills are random. To control the cost of exploring possible moves, the fixed-depth agent searches only a specified number of moves ahead. If the game has not ended at that depth, a heuristic estimates the value of the resulting state. The Azul heuristic estimates each player’s score after resolving their current board, then compares the scores from Max’s perspective by calculating the net score difference. The graph below displays how the time taken to choose a single move increases exponentially with the search depth. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{report/graphs/fixed-depth-minimax-depth-runtime.png}
+    \caption{Minimax decision time at different search depths in Azul.}
+    \label{fig:minimax-runtime-depth}
+\end{figure}
+
+The random refills require a separate decision about how the search should continue. The fixed-depth agent therefore uses a configurable chance policy when a refill is needed. The round termination policy stops the search at that point and evaluates the state with the heuristic. The sampled refills policy generates a specified number of possible refills, continues the search from each resulting state, and averages their values. The graph below shows a comparison between net score and full game runtime across different number of samples. \\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/fixed-depth-minimax-chance-policy.png}
+    \caption{Minimax game time and net score using different numbers of samples.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
+
+Although the net score does not improve with the increase in number of samples, this is highly likely due to the search depth being 2. Using the sampled refills policy with 5 samples appears to provide a good trade-of between time and the ability to reason about the outcomes of a random refill. Running fixed-depth Minimax at a max depth of 3, with 5 sampled refills results in an average net score of 54.2 and an average full-game runtime of 78.09 seconds.
