@@ -152,3 +152,9 @@ In order to investigate what ordering works better, two distinct policies have b
 
 \subsubsection{Iterative Deepening}
 Iterative deepening gives the agent a time limit for choosing each move. It searches first to depth one, then repeats the search at increasing depths, using alpha-beta pruning and the selected move-ordering policy. After each complete search, the agent keeps its chosen move. If the deadline is reached during a deeper search, that incomplete result is discarded and the move from the last completed depth is returned. The search can therefore reach different depths depending on the current game state. With a time limit of 5 seconds, iterative deepening is able to reach a depth of 4 initially and a depth of 6 later in the game once the possible number of moves reduce.
+
+
+\subsection{Monte Carlo Tree Search}
+Monte Carlo Tree Search (MCTS) is a simulation-based agent that estimates which move to choose by running simulations of possible games. Each node in its search tree records how often it has been visited and the reward accumulated from those simulations. Starting from the current position, the agent expands one untried legal move and simulates a game from the resulting game state using random moves until the game ends. It then passes the result back through the nodes visited in the tree. Once a node’s legal moves have been expanded, the Upper Confidence Bound applied to Trees (UCT) formula guides the selection of a child, balancing moves with promising results against moves that have received less attention. After the specified number of simulations, the agent returns the move corresponding with the most visited state from the start state.\\
+
+Using tic-tac-toe and its starting state, the agent completed 1,000 simulations in 0.0174 seconds. Azul adds random factory refills during a game, which means MCTS needs to be adapted to explicitly handle random refills during the game.
