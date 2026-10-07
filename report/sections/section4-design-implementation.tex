@@ -136,3 +136,15 @@ When alpha becomes greater than or equal to beta, the remaining moves at that no
     \caption{Minimax decision time with Alpha-beta pruning at different search depths in Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+\subsubsection{Move Ordering}
+The order in which alpha-beta search examines moves can affect how quickly branches are pruned. If a promising move is searched early, alpha may rise sooner at a Max node or beta may fall sooner at a Min node. This allows the agent to prune branches earlier. Minimax Alpha-beta pruning with move ordering supports policies that decide how possible moves are ordered.\\
+
+In order to investigate what ordering works better, two distinct policies have been considered. Net score gain applies each possible move to a copy of the game and estimates the current player’s score gain as if the round ended immediately after that move. The moves are then ordered with the largest score gain first. Point based ordering instead assigns weights to features of the move. It favours completing or filling pattern lines and placing tiles in central wall columns, while penalising tiles sent to the floor or overflowing a pattern line. The moves are then ordered using the assigned weights. The graph below displays comparisons between the time taken to compute a single move at different depths across the two ordering policies, and no ordering shown as a baseline. It can be clearly seen that point based move ordering provides the best performance among the policies.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/move-ordering-minimax.png}
+    \caption{Minimax decision time with Alpha-beta pruning and move ordering at different search depths in Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
