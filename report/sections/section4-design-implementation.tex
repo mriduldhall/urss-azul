@@ -148,3 +148,7 @@ In order to investigate what ordering works better, two distinct policies have b
     \caption{Minimax decision time with Alpha-beta pruning and move ordering at different search depths in Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+
+\subsubsection{Iterative Deepening}
+Iterative deepening gives the agent a time limit for choosing each move. It searches first to depth one, then repeats the search at increasing depths, using alpha-beta pruning and the selected move-ordering policy. After each complete search, the agent keeps its chosen move. If the deadline is reached during a deeper search, that incomplete result is discarded and the move from the last completed depth is returned. The search can therefore reach different depths depending on the current game state. With a time limit of 5 seconds, iterative deepening is able to reach a depth of 4 initially and a depth of 6 later in the game once the possible number of moves reduce.
