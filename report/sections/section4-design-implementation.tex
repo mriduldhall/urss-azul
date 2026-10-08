@@ -197,3 +197,17 @@ The graph below displays the net score and full game runtime at different number
     \caption{MCTS game time and net score using progressive widening for Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+\subsubsection{Heuristic Expansion}
+Progressive widening limits how many moves are added to the search tree, but the previous agent still chooses each new move at random. In Azul, this may spend limited expansion opportunities on moves that send tiles to the floor line and incur penalties. Heuristic expansion instead scores the untried legal moves and chooses to expand the highest-ranking move among them, choosing randomly if tied. Its aim is to examine moves that appear promising earlier, giving them more time to be investigated.\\
+
+Two scoring policies were considered. The point-based policy uses the same weighted features as the point epsilon rollout policy in Section 4.3.2. The score-estimate policy similarly uses projected wall points, pattern-line progress and floor penalties. The heuristics scores only choose which move is added to the tree next, while UCT still selects among existing children and the rollout policy still guides simulations.\\
+
+The graph below compares the two heuristic expansion policies using net score and full game runtime. Using the point based expansion policy alongside progressive widening and score estimate rollout policy, it takes approximately 1.67 seconds to compute a single move using 1000 simulations. Overall, it can be seen that the use of heuristic expansion massively increases performance against the random agent, while also slightly reducing the time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/mcts-heuristic-expansion.png}
+    \caption{MCTS game time and net score across heuristic expansion policies for Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
