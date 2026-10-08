@@ -158,3 +158,13 @@ Iterative deepening gives the agent a time limit for choosing each move. It sear
 Monte Carlo Tree Search (MCTS) is a simulation-based agent that estimates which move to choose by running simulations of possible games. Each node in its search tree records how often it has been visited and the reward accumulated from those simulations. Starting from the current position, the agent expands one untried legal move and simulates a game from the resulting game state using random moves until the game ends. It then passes the result back through the nodes visited in the tree. Once a node’s legal moves have been expanded, the Upper Confidence Bound applied to Trees (UCT) formula guides the selection of a child, balancing moves with promising results against moves that have received less attention. After the specified number of simulations, the agent returns the move corresponding with the most visited state from the start state.\\
 
 Using tic-tac-toe and its starting state, the agent completed 1,000 simulations in 0.0174 seconds. Azul adds random factory refills during a game, which means MCTS needs to be adapted to explicitly handle random refills during the game.
+
+\subsubsection{Azul Compatibility (Chance Handling)}
+Azul’s random factory refills require the MCTS agent to distinguish a player’s move from a random event. When tree selection reaches the end of a round with a refill pending, it stops at that boundary. The simulation then samples one possible refill and continues playing to the end of the game. This allows for natural exploration of possible outcomes over many repeated game simulations. The graph below visualises a comparison between full game runtime and net score against a varying number of simulations. It can be seen that with an increase in the number of simulations, both the total game time as well as net score increase steadily. A single move computation for Azul with 1000 simulations takes roughly 0.957 seconds which is significantly faster than Minimax.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{report/graphs/mcts-chance.png}
+    \caption{MCTS game time and net score using different numbers of simulations for Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
