@@ -168,3 +168,17 @@ Azul’s random factory refills require the MCTS agent to distinguish a player�
     \caption{MCTS game time and net score using different numbers of simulations for Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+\subsubsection{Rollout Policy}
+The chance-handling MCTS agent chooses between legal moves during simulations with equal chance. In Azul, some moves can place several tiles on the floor line, incurring penalties. During informal play-testing, the previous agent appeared to choose floor-line moves frequently. This motivated the use of rollout policies which favour certain moves over others during random simulations. The aim is to make simulated games more representative of plausible play, and hence arrive at better move predictions.\\
+
+In order to investigate what rollout policy works better, two distinct policies have been considered. The point epsilon policy uses the point-based weights introduced for Minimax move ordering in Section 4.2.3, favouring pattern-line completion and central wall positions while penalising floor use and overflow. The score estimate policy approximates a move’s immediate scoring effect using projected wall points, pattern-line progress and floor penalties. At each simulation step, both policies select the highest ranking legal move while breaking ties randomly. With probability $\epsilon$, it instead selects a legal move at random, retaining randomness during simulations.\\
+
+The graph below comparisons the two rollout policies against time taken for a full game and net score. The chance handling MCTS agent is also displayed as a baseline. Both policies perform significantly better than the previous MCTS baseline. Although point epsilon policy leads to stronger net scores at lower simulations, score estimation policy is stronger at higher number of simulations. This comes at a cost of additional computational time. However, this is acceptable since MCTS with the score estimation policy at 1000 simulations is able to compute a move in approximately 1.73 seconds.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/mcts-rollout.png}
+    \caption{MCTS game time and net score across different rollout policies for Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
