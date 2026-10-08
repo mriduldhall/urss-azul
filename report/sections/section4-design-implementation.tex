@@ -182,3 +182,6 @@ The graph below comparisons the two rollout policies against time taken for a fu
     \caption{MCTS game time and net score across different rollout policies for Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+\subsubsection{Tree Reuse}
+The MCTS agent starts a new search tree whenever it chooses a move, discarding the visits and rewards collected during its previous computations during the same game. Tree reuse retains the subtree below the move it selected. On the agent’s next turn, it checks whether a child of that subtree matches the current game state. If one matches, that child becomes the new root and the agent adds further simulations to the information already recorded there. If none matches, it starts a new tree. This allows pre-existing computation to add onto and help the next set of simulations, potentially leading to better results due to a greater number of total simulations.
