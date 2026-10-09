@@ -1,1 +1,6 @@
 \section{Methodology}
+The implementation of each approach begins with a working baseline agent for tic-tac-toe. The agents are then adapted for the complete two-player game of Azul, where random factory refills and a higher number of possible moves introduce additional demands. Further changes may be investigated to reduce computational cost or improve score difference. Each change will be compared with the preceding version, while alternative configurations of the same change will also be compared with one another.\\
+
+Comparisons will use ten preselected game seeds, with separate recorded seeds for the game and both agents. For each game seed, the agents will play in both player positions. The same seed schedule will be used across comparisons to provide consistent evaluation conditions.\\
+
+The main measure will depend on the approach being assessed. Minimax comparisons will focus on the time taken to select a move, since search cost may limit the depth reached. MCTS comparisons will focus on Azul score difference at a fixed number of simulations. Decision time will also be recorded as a secondary measure, since equal simulation counts do not guarantee equal runtimes. Tabular Q-learning comparisons will focus on win percentage against a random agent and between successive variants.
