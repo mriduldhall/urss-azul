@@ -211,3 +211,8 @@ The graph below compares the two heuristic expansion policies using net score an
     \caption{MCTS game time and net score across heuristic expansion policies for Azul.}
     \label{fig:minimax-chance-policy}
 \end{figure}
+
+
+
+\subsection{Tabular Q-Learning}
+Tabular Q-learning (TabQL) is a learning-based method that stores an estimated value for each action in a game state. These values represent the future reward the agent expects from choosing an action and continuing to play. During training, the agent plays repeated games and updates the table using rewards and estimates from subsequent states. Once trained, it looks up the current state and chooses a legal move with the highest estimated value. This is first applied to tic-tac-toe before attempting an Azul implementation.
