@@ -1,2 +1,22 @@
 \section{Results}
 This section presents the results for tic-tac-toe and Azul in separate parts. For each game, it compares the three main agent approaches through a series of head-to-head matches. Each part then discusses the patterns observed and considers possible explanations for them.
+
+\subsection{Tic Tac Toe}
+The table below represents the results from 100 head-to-head matches across the three possible agent configurations. In the table A represents the first agent in the paring, and B represents the second agent. Minimax uses the pure minimax approach, MCTS uses the pure MCTS with 2000 simulations, while TabQL uses an agent trained on 50000 episodes.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrrrr}
+        \hline
+        Pairing & Games & A wins & Draws & B wins \\
+        \hline
+        Minimax vs MCTS  & 100 & 0 & 100 & 0 \\
+        Minimax vs TabQL & 100 & 0 & 100 & 0 \\
+        MCTS vs TabQL    & 100 & 0 & 100 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Tic-tac-toe head-to-head results.}
+    \label{tab:tictactoe-results}
+\end{table}
+
+Minimax searches the complete tic-tac-toe game tree and selects a move with the best available outcome. In the head-to-head matches, MCTS and TabQL each drew all 100 games against Minimax. This suggests that neither made a mistake Minimax could exploit in the positions reached during those games. This could suggest that they have learnt optimal play. MCTS and TabQL also drew all 100 games against each other. This could suggest that they are playing at roughly the same playing strength.
