@@ -234,3 +234,15 @@ The graph below shows a comparison using win percentage against random, Minimax 
 \end{figure}
 
 \subsubsection{Azul Compatibility}
+Unlike tic-tac-toe, Azul represents each move as a Python object, while the Q-table uses integer positions to access action values. An action mapping is necessary to map possible actions to their positions in the Q-Table. It does this by storing the possible move combinations in a list. When the table is accessed, it finds the matching move and uses its position in the list as the action index.\\
+
+Azul also changes how the next state's value is used. Turns usually alternate, but the player who makes the final move of a round may also start the next round. After each non-terminal move, the trainer checks whose turn is next. If it is the same player, the discounted highest Q-value for the next state is added to the reward. Alternatively, if it is the opponent, then that value is subtracted like tic-tac-toe.\\
+
+The graph below compares the win percentage of the TabQL agent against random and Minimax opponents as the number of training episodes increase. It can be clearly seen that the TabQL agent is unable to match the playing strength of the Minimax agent. It is also unable to consistently beat the random agent which itself plays poorly due to the abundance of negatively scoring moves. This is due to the number of possible board states and a high number of possible moves for each of them.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/tabql-azul.png}
+    \caption{Win percentage measured against random and minimax opponents in Azul.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
