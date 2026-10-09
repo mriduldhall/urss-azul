@@ -21,3 +21,22 @@ The table below represents the results from 100 head-to-head matches across the 
 
 Minimax searches the complete tic-tac-toe game tree and selects a move with the best available outcome. In the head-to-head matches, MCTS and TabQL each drew all 100 games against Minimax. This suggests that neither made a mistake Minimax could exploit in the positions reached during those games. This could suggest that they have learnt optimal play. MCTS and TabQL also drew all 100 games against each other. This could suggest that they are playing at roughly the same playing strength.
 
+\subsection{Azul}
+The table below represents the results from 20 head-to-head matches across the tree possible agent configurations. In the table, A represents the first agent in the pairing, and B represents the second agent. Minimax uses the iterative deepening variant with a time limit of 5 seconds, the sample refills chance policy with 5 samples, and the point based ordering policy. MCTS uses the heuristic expansion with 1000 simulations, single sample chance policy, score estimate rollout policy, and point based expansion policy. The TabQL agent has been trained on 10000 episodes. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrrrrr}
+        \hline
+        Pairing & Games & A wins & Draws & B wins & Net score (A--B) \\
+        \hline
+        Minimax vs MCTS  & 20 & 7  & 0 & 13 & $-8.35$ \\
+        Minimax vs TabQL & 20 & 20 & 0 & 0  & $62.95$ \\
+        MCTS vs TabQL    & 20 & 20 & 0 & 0  & $61.9$ \\
+        \hline
+    \end{tabular}
+    \caption{Azul head-to-head results.}
+    \label{tab:azul-results}
+\end{table}
+
+In the 20 Azul games between Minimax and MCTS, MCTS won 13 and Minimax won 7. MCTS therefore performed better in this set of matches, although more games are needed to establish a general difference in strength. Both agents won all 20 games against TabQL. This is likely due to Azul’s large state and action space limiting what TabQL has learnt. MCTS may also respond differently as the opponent’s play changes. This happens because it searches from the current position and gives each simulated win the same reward regardless of victory margin. This could favour moves that secure a win over moves that increase the score difference. 
