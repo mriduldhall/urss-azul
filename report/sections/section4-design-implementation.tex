@@ -216,3 +216,21 @@ The graph below compares the two heuristic expansion policies using net score an
 
 \subsection{Tabular Q-Learning}
 Tabular Q-learning (TabQL) is a learning-based method that stores an estimated value for each action in a game state. These values represent the future reward the agent expects from choosing an action and continuing to play. During training, the agent plays repeated games and updates the table using rewards and estimates from subsequent states. Once trained, it looks up the current state and chooses a legal move with the highest estimated value. This is first applied to tic-tac-toe before attempting an Azul implementation.
+
+\subsubsection{Tic-Tac-Toe Compatibility}
+In order to allow saving and reloading of the table, JSON is used. This requires game states to be represented as strings rather than python game objects. A tic-tac-toe state encoder converts the board into a corresponding string representation. Each cell is recorded relative to the player whose turn it is, with 1 used for that player, -1 for the opponent and 0 for an empty cell.\\
+
+During training, an action-selection policy chooses which legal move to make. Two distinct policies were implemented in order to investigate different approaches. Epsilon-greedy selects a random legal move with probability $\epsilon$ and otherwise selects a move with the highest Q-value. Softmax assigns a probability to each legal move based on its Q-value. Its temperature decreases over training episodes, making moves with higher Q-values more likely to be selected.\\
+
+The agent also requires a reward policy in order to update the table with the results of the game. The outcome reward policy gives 1 for a win, 0 for a draw, and -1 for a loss, while moves before the end of the game receive 0. Tic-tac-toe alternates turns, so after a non-terminal move the next state's Q-values are expressed from the opponent's perspective. The highest value in that state is therefore subtracted when updating the value of the move just made. This estimates the effect of the opponent choosing its strongest continuation, similar to Minimax.\\
+
+The graph below shows a comparison using win percentage against random, Minimax and MCTS agents across different number of training episodes. Here a draw has been considered a win since under ideal play it is only possible to guarantee a draw in tic-tac-toe. The TabQL agent learns to play ideally as the number of episodes increases and is able to match Minimax's ability. Moreover, it can be seen that epsilon-greedy selection converges to ideal play significantly faster than softmax selection. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{report/graphs/tabql-tic-tac-toe.png}
+    \caption{Win percentage measured against random and minimax opponents in tic tac toe.}
+    \label{fig:minimax-chance-policy}
+\end{figure}
+
+\subsubsection{Azul Compatibility}
